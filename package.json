@@ -1,0 +1,10 @@
+{
+  "name": "12thfan-website-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix ./12thfan-website",
+    "build": "npm run build --prefix ./12thfan-website",
+    "start": "npm run start --prefix ./12thfan-website",
+    "lint": "npm run lint --prefix ./12thfan-website"
+  }
+}
