@@ -24,6 +24,8 @@
 
 html {
   min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   color-scheme: light;
   /* Page backdrop lives on html so it isn’t covered by body stacking; body stays transparent. */
   background-color: var(--bg-gradient-to);

@@ -23,7 +23,7 @@ export default function HeaderJoinWithGlow() {
     >
       <Link
         href="/signup"
-        className="inline-flex min-h-[38px] items-center justify-center px-3 py-1.5 text-sm font-semibold uppercase tracking-wide text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70 sm:min-h-[40px] sm:px-4 sm:text-base [font-family:var(--font-passion-one)]"
+        className="inline-flex min-h-11 min-w-[2.75rem] items-center justify-center px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70 active:opacity-90 sm:min-h-[40px] sm:px-4 sm:py-1.5 sm:text-base [font-family:var(--font-passion-one)]"
       >
         Join
       </Link>

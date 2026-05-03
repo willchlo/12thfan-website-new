@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const imgClass =
-  "h-12 w-auto object-contain object-left brightness-0 invert sm:h-14";
+  "h-10 max-h-10 w-auto max-w-[min(148px,46vw)] object-contain object-left brightness-0 invert sm:h-14 sm:max-h-none sm:max-w-none";
 
 export default function SiteHeaderLogo() {
   const pathname = usePathname();
@@ -31,7 +31,7 @@ export default function SiteHeaderLogo() {
           height={1013}
           priority
           className={imgClass}
-          sizes="(max-width: 640px) 220px, 260px"
+          sizes="(max-width: 640px) 160px, 260px"
           aria-hidden
         />
       </button>
@@ -51,7 +51,7 @@ export default function SiteHeaderLogo() {
         height={1013}
         priority
         className={imgClass}
-        sizes="(max-width: 640px) 220px, 260px"
+        sizes="(max-width: 640px) 160px, 260px"
       />
     </Link>
   );

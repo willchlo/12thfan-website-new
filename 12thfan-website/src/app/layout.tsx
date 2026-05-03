@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Geist, Geist_Mono } from "next/font/google";
 import GlobalScrollBlur from "@/components/GradualBlur/GlobalScrollBlur";
@@ -29,6 +29,13 @@ const geistMono = Geist_Mono({
 /** Bump when replacing `public/favicon.png` so browsers pick up the new tab icon. */
 const FAVICON_VERSION = "12thico-v5";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#1a4336",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "12th Fan",
@@ -49,10 +56,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${passionOne.variable} ${geistSans.variable} ${geistMono.variable} h-full snap-y snap-proximity scroll-smooth antialiased`}
+      className={`${passionOne.variable} ${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased sm:snap-y sm:snap-proximity`}
     >
-      <body className="relative z-[1] min-h-full text-center">
-        <div className="relative flex min-h-full flex-col pb-[calc(14rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(16rem+env(safe-area-inset-bottom,0px))]">
+      <body className="relative z-[1] min-h-full max-w-[100dvw] touch-manipulation overflow-x-clip text-center">
+        <div className="relative flex min-h-full min-w-0 flex-col pb-[calc(14rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(16rem+env(safe-area-inset-bottom,0px))]">
           <SiteHeader />
           {children}
           <SiteFooter />

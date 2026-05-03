@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 const subNavLink =
-  "text-sm font-medium text-zinc-600 transition-colors hover:text-[var(--brand-forest)] dark:text-zinc-400 dark:hover:text-emerald-400/90";
+  "inline-flex min-h-10 items-center rounded-md py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-[var(--brand-forest)] active:bg-zinc-100/80 dark:text-zinc-400 dark:hover:text-emerald-400/90 dark:active:bg-zinc-800/50 sm:min-h-0 sm:py-0";
 
 export default function EventsLayout({ children }: { children: ReactNode }) {
   return (

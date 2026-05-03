@@ -16,7 +16,7 @@ export default function HomeJoinSection() {
             Be among the first to become part of 12th Fan.
           </p>
 
-          <div className="mt-10 w-full rounded-2xl border border-zinc-200/90 bg-white/80 p-8 shadow-sm backdrop-blur-sm dark:border-zinc-700/80 dark:bg-zinc-900/35 sm:mt-12 sm:p-10 lg:mt-10 lg:p-12">
+          <div className="mt-10 w-full min-w-0 rounded-2xl border border-zinc-200/90 bg-white/80 p-5 shadow-sm backdrop-blur-sm dark:border-zinc-700/80 dark:bg-zinc-900/35 sm:mt-12 sm:p-10 lg:mt-10 lg:p-12">
             <SignupForm />
           </div>
         </div>
