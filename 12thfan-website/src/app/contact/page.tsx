@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact us — 12th Fan",
+  title: "Contact us",
   description: "Get in touch with the 12th Fan team.",
 };
 

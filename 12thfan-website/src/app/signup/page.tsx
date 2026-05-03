@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SignupForm } from "./SignupForm";
 
 export const metadata: Metadata = {
-  title: "Sign up — 12th Fan",
+  title: "Sign up",
   description: "Join the 12th Fan community.",
 };
 

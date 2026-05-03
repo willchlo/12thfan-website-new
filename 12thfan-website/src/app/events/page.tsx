@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Events — 12th Fan",
+  title: "Events",
   description:
     "Explore how 12th Fan surfaces fixtures and meetups—the projection map preview and social channels for women’s sport.",
 };

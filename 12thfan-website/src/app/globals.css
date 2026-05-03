@@ -56,7 +56,8 @@ html {
       var(--bg-gradient-to) 100%
     );
   background-size: 118% 118%, 118% 118%, 118% 118%, 118% 118%, 118% 118%;
-  background-attachment: fixed;
+  /* `fixed` repaints the full viewport on scroll and tanks dev + scroll perf */
+  background-attachment: scroll;
   animation: page-gradient-drift 42s ease-in-out infinite;
 }
 
