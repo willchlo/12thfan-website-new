@@ -10,6 +10,8 @@ const FAN_LAYOUT = {
   left: { rx: 10, ry: 20, scale: 0.82, tz: -18 },
   center: { rx: 11, ry: -16, scale: 1, tz: 0 },
   right: { rx: 10, ry: -46, scale: 0.82, tz: -18 },
+  /** No idle 3D yaw — used when outer layout (e.g. scroll collage) supplies 2D rotation */
+  flat: { rx: 0, ry: 0, scale: 1, tz: 0 },
 } as const;
 
 export type IPhoneFanRole = keyof typeof FAN_LAYOUT;
@@ -42,7 +44,7 @@ export default function IPhone3DMockup({
 
   const widthClasses =
     size === "prominent" ?
-      "w-[min(82vw,300px)] sm:w-[340px]"
+      "w-[min(72vw,252px)] sm:w-[340px]"
     : "w-[min(72vw,240px)] sm:w-[260px]";
 
   useEffect(() => {
@@ -82,13 +84,16 @@ export default function IPhone3DMockup({
   const baseRx = reduceMotion ? 0 : layout.rx;
   const baseRy = reduceMotion ? 0 : layout.ry;
   const tz = reduceMotion ? 0 : layout.tz;
+  const flat2d = fan === "flat";
   const transform =
-    reduceMotion ?
+    flat2d || reduceMotion ?
       undefined
     : `rotateX(${baseRx + tilt.rx}deg) rotateY(${baseRy + tilt.ry}deg) translateZ(${tz}px)`;
 
   const aria =
-    fan === "center"
+    fan === "flat"
+      ? "Preview of the 12th Fan app on an iPhone."
+    : fan === "center"
       ? "3D preview of the 12th Fan app on an iPhone. Hover to rotate."
     : fan === "left"
       ? "3D preview of the 12th Fan app home screen. Hover to rotate."
@@ -97,12 +102,12 @@ export default function IPhone3DMockup({
   return (
     <div
       ref={rootRef}
-      className={`inline-block duration-700 [perspective:1400px] [perspective-origin:50%_40%] ${className}`}
+      className={`inline-block ${flat2d ? "" : "duration-700 [perspective:1400px] [perspective-origin:50%_40%]"} ${className}`}
       role="img"
       aria-label={aria}
-      onMouseEnter={() => setHover(true)}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
+      onMouseEnter={flat2d ? undefined : () => setHover(true)}
+      onMouseMove={flat2d ? undefined : handleMove}
+      onMouseLeave={flat2d ? undefined : handleLeave}
     >
       <div
         className="relative will-change-transform"
@@ -156,10 +161,10 @@ export default function IPhone3DMockup({
                   width={470}
                   height={1024}
                   sizes={
-                    fan !== "center" ?
+                    fan !== "center" && fan !== "flat" ?
                       "(max-width:640px) 68vw, 280px"
                     : size === "prominent" ?
-                      "(max-width:640px) 82vw, 340px"
+                      "(max-width:640px) 72vw, 340px"
                     : "(max-width:640px) 72vw, 260px"
                   }
                   className="h-full w-full object-cover object-top"

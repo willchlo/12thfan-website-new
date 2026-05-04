@@ -5,7 +5,7 @@ import SocialCardSwap from "@/components/SocialCardSwap";
 /** Social stack; lives below the hologram / events preview on the homepage. */
 export default function HomeSocialSection() {
   return (
-    <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
+    <div className="relative z-10 mx-auto w-full max-w-6xl overflow-x-clip px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,460px)] lg:items-center lg:gap-12 xl:gap-16">
         <div className="mx-auto w-full max-w-2xl text-center text-balance lg:justify-self-center">
           <h2 className="text-3xl font-bold tracking-tight text-[var(--brand-forest)] dark:text-emerald-400 sm:text-4xl">

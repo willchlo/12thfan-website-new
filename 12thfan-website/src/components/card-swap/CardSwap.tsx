@@ -227,7 +227,7 @@ export default function CardSwap({
     }
 
     return cleanupTimers;
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, childArr.length]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, childArr.length, width, height]);
 
   const dimensionStyle: CSSProperties =
     typeof width === "number" && typeof height === "number" ?

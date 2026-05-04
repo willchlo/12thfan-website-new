@@ -4,11 +4,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
+  --background: #fbf9f3;
   --foreground: #171717;
   /* Logo-adjacent deep forest green — hero wash & accents */
   --brand-forest: #1a4336;
-  --hero-surface: #ffffff;
+  /* Warm paper — mixed with green in hero / page wash instead of pure white */
+  --hero-surface: #fbf9f3;
   /* Page backdrop: top→bottom gradient */
   --bg-gradient-from: #e8f2ec;
   --bg-gradient-via: color-mix(in srgb, var(--brand-forest) 48%, #b8dac8);
@@ -24,6 +25,8 @@
 
 html {
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color-scheme: light;
@@ -67,7 +70,10 @@ body {
   position: relative;
   z-index: 1;
   min-height: 100%;
+  max-width: 100%;
   margin: 0;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
   background: transparent;
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -306,5 +312,30 @@ aside[role="navigation"] a[href="/signup"] {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* Homepage footer: mobile-only — one surface from join (zinc-50) into page greens (no solid band). */
+@media (max-width: 639px) {
+  .footer-mobile-unified-bg {
+    background-color: var(--bg-gradient-to);
+    background-image: linear-gradient(
+      180deg,
+      #fafafa 0%,
+      color-mix(in srgb, var(--bg-gradient-from) 68%, #fafafa) 9%,
+      var(--bg-gradient-from) 20%,
+      var(--bg-gradient-via) 48%,
+      color-mix(in srgb, var(--brand-forest) 20%, var(--bg-gradient-to)) 78%,
+      var(--bg-gradient-to) 100%
+    );
+  }
+
+  .dark .footer-mobile-unified-bg {
+    background-image: linear-gradient(
+      180deg,
+      #09090b 0%,
+      color-mix(in srgb, var(--brand-forest) 36%, #0f172a) 36%,
+      #050f0c 100%
+    );
   }
 }

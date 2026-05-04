@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import CardSwap, { Card } from "@/components/card-swap/CardSwap";
 
@@ -246,14 +247,46 @@ function SocialFeedCard({ post }: { post: FeedPost }) {
 }
 
 export default function SocialCardSwap() {
+  const measureRef = useRef<HTMLDivElement>(null);
+  const [{ width, height, cardDistance, verticalDistance }, setDims] = useState({
+    width: 340,
+    height: 556,
+    cardDistance: 40,
+    verticalDistance: 43,
+  });
+
+  useLayoutEffect(() => {
+    const el = measureRef.current;
+    if (!el) return;
+    const baseW = 440;
+    const baseH = 720;
+    const sync = () => {
+      const w = Math.min(baseW, Math.max(280, Math.floor(el.getBoundingClientRect().width)));
+      const scale = w / baseW;
+      setDims({
+        width: w,
+        height: Math.round(baseH * scale),
+        cardDistance: Math.round(52 * scale),
+        verticalDistance: Math.round(56 * scale),
+      });
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <div className="relative mx-auto min-h-[min(640px,90vh)] w-full max-w-[min(94vw,460px)] py-8 lg:mx-0">
+    <div
+      ref={measureRef}
+      className="relative mx-auto min-h-[min(640px,90vh)] w-full max-w-[min(94vw,460px)] overflow-x-clip py-8 lg:mx-0"
+    >
       <CardSwap
         containerClassName="card-swap-container--page card-swap-container--align-end"
-        width={440}
-        height={720}
-        cardDistance={52}
-        verticalDistance={56}
+        width={width}
+        height={height}
+        cardDistance={cardDistance}
+        verticalDistance={verticalDistance}
         delay={5200}
         pauseOnHover={false}
         skewAmount={5}

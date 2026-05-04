@@ -39,12 +39,15 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <div id="footer" className="snap-start snap-always scroll-mt-8 pt-16 sm:pt-20">
-      <footer className="mt-auto border-t border-[color-mix(in_srgb,var(--brand-forest)_22%,transparent)] bg-transparent py-14 pb-20 dark:border-emerald-100/12 sm:pb-24">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-4 sm:px-6 lg:px-8">
+    <div
+      id="footer"
+      className="footer-mobile-unified-bg snap-start snap-always scroll-mt-8 pt-10 max-sm:pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))] sm:bg-transparent sm:pt-20"
+    >
+      <footer className="mt-auto border-t border-[color-mix(in_srgb,var(--brand-forest)_22%,transparent)] bg-transparent py-8 pb-6 max-sm:border-t-0 dark:border-emerald-100/12 sm:py-14 sm:pb-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 sm:gap-10 sm:px-6 lg:px-8">
           <div id="social" className="flex scroll-mt-28 flex-col items-center sm:scroll-mt-32">
             <nav
-              className="flex flex-row items-center gap-3 sm:gap-5"
+              className="flex max-sm:text-[var(--brand-forest)] flex-row items-center gap-3 sm:gap-5 sm:text-white"
               aria-label="Social media"
             >
               <a

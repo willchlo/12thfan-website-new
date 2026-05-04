@@ -143,22 +143,25 @@ export default function PhoneHologramMapSection({ className = "" }: { className?
 
   return (
     <div className={cn("relative", className)} aria-labelledby={`${detailId}-heading`}>
-      <div className="relative z-10 mx-auto grid min-h-[min(100svh,900px)] w-full max-w-6xl grid-cols-1 content-center gap-10 px-4 py-16 sm:px-6 lg:min-h-[100svh] lg:grid-cols-[minmax(0,1fr)_min(18rem,32vw)] lg:items-center lg:gap-10 lg:px-8 lg:py-20 xl:grid-cols-[minmax(0,1fr)_20rem]">
+      <div className="relative z-10 mx-auto grid min-h-[min(100svh,900px)] w-full max-w-6xl grid-cols-1 content-center gap-6 px-0 py-16 sm:gap-10 sm:px-6 lg:min-h-[100svh] lg:grid-cols-[minmax(0,1fr)_min(18rem,32vw)] lg:items-center lg:px-8 lg:py-20 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="relative flex flex-col items-center">
           <div className="relative z-10 mx-auto mb-1 max-w-xl -translate-y-7 px-1 text-center text-balance sm:-translate-y-9">
             <h2
               id={`${detailId}-heading`}
               className="text-3xl tracking-tight text-white sm:text-4xl [text-shadow:0_1px_2px_rgb(0_0_0_/_0.55),0_2px_14px_rgb(0_0_0_/_0.35)]"
             >
-              See what&apos;s happening near you
+              EXAMPLE EVENTS NEAR YOU
             </h2>
           </div>
 
           {/* Beam + bubbles share height above phone; strip is overlaid bottom so light meets glass with no gap */}
           <div className="relative z-10 mx-auto -mt-1 w-full max-w-lg -translate-y-3 overflow-visible leading-none sm:-translate-y-5">
             <div className="relative mx-auto min-h-[min(56vh,460px)] w-full overflow-visible [--phone-reserve:clamp(38px,11.8vw,56px)] sm:min-h-[min(58vh,480px)]">
-              <div className="pointer-events-none absolute inset-x-0 top-0 bottom-[var(--phone-reserve)] z-[4]" aria-hidden>
-                <div className="absolute inset-0 translate-y-7 sm:translate-y-8">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 z-[4] bottom-[var(--phone-reserve)] max-sm:bottom-0"
+                aria-hidden
+              >
+                <div className="absolute inset-0 -translate-y-32 sm:translate-y-8">
                   <div className="hologram-projection-breathe absolute inset-0">
                   {/* Soft outer fan — same trapezoid; widens upward only (narrow base reads as pill aperture) */}
                   <div
@@ -235,7 +238,7 @@ export default function PhoneHologramMapSection({ className = "" }: { className?
                 })}
               </div>
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[12] flex flex-col items-center">
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[12] flex flex-col items-center max-sm:-translate-y-32 sm:translate-y-0">
                 <PhoneGlassStripOnly />
               </div>
             </div>
@@ -244,7 +247,7 @@ export default function PhoneHologramMapSection({ className = "" }: { className?
 
         <aside
           id={detailId}
-          className="mx-auto flex w-full max-w-xl flex-col justify-center lg:mx-0 lg:max-w-none"
+          className="mx-auto flex w-full max-w-none flex-col justify-center max-sm:-mt-36 sm:mt-0 sm:max-w-xl lg:mx-0 lg:max-w-none"
           aria-live="polite"
         >
           <div className="lg:sticky lg:top-[28vh]">
@@ -335,7 +338,7 @@ function EventDetailCard({
   const placeholder = (
     <div
       className={cn(
-        "flex min-h-[220px] flex-col justify-center overflow-hidden rounded-[1.75rem] border border-dashed border-zinc-300/90 bg-white/80 px-6 py-12 text-center shadow-[0_18px_48px_-22px_rgb(15_23_42_/_0.12)] backdrop-blur-sm dark:border-zinc-600 dark:bg-zinc-900/40 dark:text-zinc-100 lg:min-h-[280px]",
+        "flex min-h-[220px] flex-col justify-center overflow-hidden rounded-none border border-dashed border-zinc-300/90 bg-white/80 px-6 py-12 text-center shadow-[0_18px_48px_-22px_rgb(15_23_42_/_0.12)] backdrop-blur-sm dark:border-zinc-600 dark:bg-zinc-900/40 dark:text-zinc-100 sm:rounded-[1.75rem] lg:min-h-[280px]",
       )}
     >
       <p className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
@@ -350,7 +353,7 @@ function EventDetailCard({
   const subtitle = ui ? `${ui.friendLead} + ${ui.extraFriends} more friends going — you in?` : "";
 
   return (
-    <div className={cn("relative isolate overflow-hidden rounded-[1.75rem]", className)}>
+    <div className={cn("relative isolate overflow-hidden rounded-none sm:rounded-[1.75rem]", className)}>
       <div
         className={cn(
           fadeLayer,
@@ -370,7 +373,7 @@ function EventDetailCard({
           <article
             key={eventIndex}
             className={cn(
-              "hologram-detail-card-enter flex flex-col overflow-hidden rounded-[1.75rem] border border-zinc-200/95 bg-white text-zinc-900 shadow-[0_22px_60px_-18px_rgb(15_23_42_/_0.14)] dark:border-zinc-200 dark:bg-white dark:shadow-[0_28px_72px_-28px_rgb(0_0_0_/_0.38)]",
+              "hologram-detail-card-enter flex flex-col overflow-hidden rounded-none border border-zinc-200/95 bg-white text-zinc-900 shadow-[0_22px_60px_-18px_rgb(15_23_42_/_0.14)] dark:border-zinc-200 dark:bg-white dark:shadow-[0_28px_72px_-28px_rgb(0_0_0_/_0.38)] sm:rounded-[1.75rem]",
             )}
           >
             <div className="relative h-44 w-full shrink-0 sm:h-52">

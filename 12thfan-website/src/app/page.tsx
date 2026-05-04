@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import BorderGlow from "@/components/BorderGlow/BorderGlow";
-import IPhone3DMockup from "@/components/IPhone3DMockup";
+import AppPreviewPhones from "@/components/AppPreviewPhones";
 import HomeJoinSection from "@/components/HomeJoinSection";
 import HomeSocialSection from "@/components/HomeSocialSection";
 import PhoneHologramMapSection from "@/components/PhoneHologramMapSection";
@@ -53,27 +53,27 @@ export default function Home() {
   return (
     <div className="flex min-h-full flex-col bg-transparent text-zinc-900 dark:text-zinc-50">
       <ZoomSnapSection
-        className="overflow-hidden bg-[color-mix(in_srgb,var(--bg-gradient-from)_55%,#fafafa)] dark:bg-zinc-950"
+        className="overflow-hidden bg-[color-mix(in_srgb,var(--bg-gradient-from)_55%,#fbf9f3)] dark:bg-zinc-950 max-sm:-mt-[calc(4.5rem+env(safe-area-inset-top,0px))]"
         backdrop={
           <>
-            {/* Stronger forest wash — visible against tinted base; white veil only near top for logo contrast */}
+            {/* Stronger forest wash — visible against tinted base; warm veil near top for logo contrast */}
             <div
               className="pointer-events-none absolute inset-0 z-0 min-h-full bg-[radial-gradient(ellipse_155%_92%_at_50%_108%,color-mix(in_srgb,var(--brand-forest)_44%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_16%,transparent)_48%,transparent_72%)]"
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute inset-0 z-0 min-h-full bg-[linear-gradient(to_bottom,#fff_0%,color-mix(in_srgb,#fff_65%,transparent)_18%,transparent_32%)] dark:bg-[linear-gradient(to_bottom,#09090b_0%,color-mix(in_srgb,#09090b_82%,transparent)_22%,transparent_40%)]"
+              className="pointer-events-none absolute inset-0 z-0 min-h-full bg-[linear-gradient(to_bottom,#fbf9f3_0%,color-mix(in_srgb,#fbf9f3_65%,transparent)_18%,transparent_32%)] dark:bg-[linear-gradient(to_bottom,#09090b_0%,color-mix(in_srgb,#09090b_82%,transparent)_22%,transparent_40%)]"
               aria-hidden
             />
             {/* Fade into the next section */}
             <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-36 bg-linear-to-t from-[color-mix(in_srgb,var(--bg-gradient-from)_70%,#fafafa)] to-transparent sm:h-44 dark:from-zinc-950 dark:to-transparent"
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-36 bg-linear-to-t from-[color-mix(in_srgb,var(--bg-gradient-from)_70%,#fbf9f3)] to-transparent sm:h-44 dark:from-zinc-950 dark:to-transparent"
               aria-hidden
             />
           </>
         }
       >
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8 lg:py-36">
+        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-20 text-center max-sm:-translate-y-8 max-sm:pt-[calc(5rem+4.5rem+env(safe-area-inset-top,0px))] sm:translate-y-0 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
           <h1 className="mx-auto flex w-full max-w-[min(100%,32rem)] justify-center">
             <Image
               src="/logo-clear.png"
@@ -86,7 +86,8 @@ export default function Home() {
             />
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-balance text-3xl tracking-tight text-[color-mix(in_srgb,#ecfdf5_88%,white)] sm:text-4xl [font-family:var(--font-passion-one)] [text-shadow:0_1px_2px_rgb(0_0_0_/_0.6)]">
-            Experience women&apos;s sport together
+            <span>Experience women&apos;s </span>
+            <span className="block sm:inline">sport together</span>
           </p>
           <div className="mx-auto mt-10 flex justify-center">
             <BorderGlow
@@ -116,7 +117,7 @@ export default function Home() {
 
       <ZoomSnapSection
         id="app-preview"
-        className="group/app-preview relative overflow-hidden border-b border-zinc-200/50 bg-linear-to-b from-emerald-50/35 via-white/88 to-white/82 dark:border-zinc-800/50 dark:from-emerald-950/35 dark:via-zinc-950/90 dark:to-zinc-950/85"
+        className="group/app-preview relative max-sm:z-[15] max-sm:overflow-x-clip max-sm:overflow-y-visible sm:overflow-hidden max-sm:border-b-0 sm:border-b sm:border-zinc-200/50 bg-linear-to-b from-emerald-50/35 via-white/88 to-white/82 dark:sm:border-zinc-800/50 dark:from-emerald-950/35 dark:via-zinc-950/90 dark:to-zinc-950/85"
         backdrop={
           <div
             className="app-preview-blob-drift pointer-events-none absolute left-1/2 top-[20%] z-0 h-[min(50vh,420px)] w-[min(100%,520px)] rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--brand-forest)_14%,transparent),transparent)] blur-[80px]"
@@ -124,57 +125,7 @@ export default function Home() {
           />
         }
       >
-        <div className="relative flex min-h-[100svh] w-full flex-col items-center justify-center px-3 py-16 sm:px-4 sm:py-20">
-          <div className="relative flex flex-col items-center gap-10">
-            <div className="relative isolate flex max-w-[100vw] flex-row flex-nowrap items-end justify-center gap-1 overflow-x-auto overflow-y-visible overscroll-x-contain px-1 pb-1 pt-4 sm:max-w-none sm:gap-3 sm:overflow-visible sm:px-0 md:gap-6 lg:gap-9">
-              {/* Static wash: spreads from behind the center phone; stronger on section hover */}
-              <div
-                className="pointer-events-none absolute left-1/2 top-[58%] z-0 h-[min(52vh,440px)] w-[min(160vw,760px)] -translate-x-1/2 -translate-y-1/2 opacity-40 transition-opacity duration-500 ease-out group-hover/app-preview:opacity-100 motion-reduce:transition-none motion-reduce:group-hover/app-preview:opacity-80"
-                aria-hidden
-              >
-                <div
-                  className="absolute inset-0 bg-[radial-gradient(ellipse_72%_64%_at_50%_34%,color-mix(in_srgb,var(--brand-forest)_82%,transparent)_0%,color-mix(in_srgb,#34d399_58%,transparent)_20%,color-mix(in_srgb,#6ee7b7_42%,transparent)_38%,color-mix(in_srgb,#a7f3d0_24%,transparent)_54%,transparent_80%)] opacity-100 blur-[28px] sm:blur-[38px]"
-                />
-                <div
-                  className="absolute inset-[-6%_-10%_-18%_-10%] bg-[radial-gradient(ellipse_95%_85%_at_50%_40%,color-mix(in_srgb,#ecfdf5_62%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_38%,transparent)_18%,color-mix(in_srgb,#34d399_28%,transparent)_38%,transparent_68%)] opacity-100 blur-[56px] sm:blur-[72px]"
-                />
-                <div
-                  className="absolute inset-[-18%_-22%_-32%_-22%] bg-[radial-gradient(ellipse_100%_88%_at_50%_48%,color-mix(in_srgb,#d1fae5_35%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_22%,transparent)_35%,transparent_62%)] opacity-90 blur-[90px] sm:blur-[110px]"
-                />
-                {/* Tight core — extra luminance directly behind the center phone */}
-                <div
-                  className="absolute left-1/2 top-[32%] h-[min(26vh,220px)] w-[min(56vw,270px)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_68%_62%_at_50%_46%,color-mix(in_srgb,#fff_22%,var(--brand-forest))_0%,color-mix(in_srgb,var(--brand-forest)_95%,transparent)_8%,color-mix(in_srgb,#34d399_78%,transparent)_26%,color-mix(in_srgb,#6ee7b7_48%,transparent)_48%,transparent_76%)] opacity-100 blur-[14px] sm:blur-[18px]"
-                  aria-hidden
-                />
-              </div>
-              <IPhone3DMockup
-                fan="left"
-                size="prominent"
-                screenSrc="/app-preview-left.png"
-                screenAlt="12th Fan app home screen"
-                className="relative z-[1] shrink-0"
-              />
-              <IPhone3DMockup
-                fan="center"
-                size="prominent"
-                screenSrc="/app-preview-center.png"
-                screenAlt="12th Fan app home screen with events and navigation"
-                className="relative z-10 shrink-0 -translate-y-1 sm:-translate-y-2"
-              />
-              <IPhone3DMockup
-                fan="right"
-                size="prominent"
-                screenSrc="/app-preview-events.png"
-                screenAlt="12th Fan events map showing matches and gatherings in the UK"
-                className="relative z-[1] shrink-0"
-              />
-            </div>
-            <div
-              className="-mt-2 h-[20px] w-[min(92vw,420px)] rounded-[100%] bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.2),transparent_72%)] blur-md dark:bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.52),transparent_72%)]"
-              aria-hidden
-            />
-          </div>
-        </div>
+        <AppPreviewPhones />
       </ZoomSnapSection>
 
       <ZoomSnapSection

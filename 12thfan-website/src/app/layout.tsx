@@ -59,9 +59,9 @@ export default function RootLayout({
       className={`${passionOne.variable} ${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased sm:snap-y sm:snap-proximity`}
     >
       <body className="relative z-[1] min-h-full max-w-[100dvw] touch-manipulation overflow-x-clip text-center">
-        <div className="relative flex min-h-full min-w-0 flex-col pb-[calc(14rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(16rem+env(safe-area-inset-bottom,0px))]">
+        <div className="relative flex min-h-full min-w-0 max-w-[100dvw] flex-col overflow-x-clip pb-0 sm:pb-[calc(16rem+env(safe-area-inset-bottom,0px))]">
           <SiteHeader />
-          {children}
+          <div className="min-w-0 max-sm:bg-[var(--hero-surface)] max-sm:pt-2 sm:contents">{children}</div>
           <SiteFooter />
           <GlobalScrollBlur />
         </div>

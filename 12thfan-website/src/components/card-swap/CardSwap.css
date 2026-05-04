@@ -16,6 +16,8 @@
   transform: none;
   transform-origin: center center;
   margin-inline: auto;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* Sit on the end of the row on wide layouts (homepage social: text left, stack right) */
