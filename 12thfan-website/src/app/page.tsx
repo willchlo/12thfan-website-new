@@ -73,25 +73,39 @@ export default function Home() {
           </>
         }
       >
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-20 text-center max-sm:-translate-y-8 max-sm:pt-[calc(5rem+4.5rem+env(safe-area-inset-top,0px))] sm:translate-y-0 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
-          <h1 className="mx-auto flex w-full max-w-[min(100%,32rem)] justify-center">
+        <Image
+          src="/background.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none absolute inset-0 z-0 object-cover object-center"
+        />
+        <div className="pointer-events-none absolute inset-x-0 top-[calc(1.25rem+env(safe-area-inset-top,0px))] z-20 flex flex-col items-center px-4 sm:top-4">
+          <Image
+            src="/logo-dark-green.png"
+            alt="12th Fan"
+            width={1553}
+            height={1013}
+            priority
+            sizes="(max-width: 640px) 52vw, (max-width: 1024px) 42vw, 30rem"
+            className="h-auto w-full max-w-[52rem] object-contain sm:max-w-[68rem] lg:max-w-[88rem]"
+          />
+        </div>
+        <div className="pointer-events-none absolute inset-0 z-0 bg-black/10" aria-hidden />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-32 bg-linear-to-t from-black/30 to-transparent" aria-hidden />
+        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-4xl -translate-y-3 flex-col px-4 pb-10 text-center max-sm:-translate-y-10 max-sm:pt-[calc(5rem+4.5rem+env(safe-area-inset-top,0px))] sm:-translate-y-4 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
+          <div className="absolute inset-x-0 bottom-24 z-20 mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:bottom-28 sm:gap-5 lg:bottom-32">
             <Image
-              src="/logo-clear.png"
-              alt="12th Fan"
-              width={1553}
-              height={1013}
-              priority
-              sizes="(max-width: 640px) 54vw, (max-width: 1024px) 48vw, 32rem"
-              className="h-auto w-full object-contain dark:brightness-110"
+              src="/slogon.png"
+              alt="Experience women's sport together"
+              width={1200}
+              height={250}
+              sizes="(max-width: 640px) 72vw, (max-width: 1024px) 56vw, 44rem"
+              className="hero-slogan-delayed-fade translate-y-44 h-auto w-full max-w-[36rem] object-contain drop-shadow-[0_10px_22px_rgba(0,0,0,0.22)] sm:translate-y-48 sm:max-w-[48rem] lg:translate-y-52 lg:max-w-[64rem]"
             />
-          </h1>
-          <p className="mx-auto mt-6 max-w-xl text-balance text-3xl tracking-tight text-[color-mix(in_srgb,#ecfdf5_88%,white)] sm:text-4xl [font-family:var(--font-passion-one)] [text-shadow:0_1px_2px_rgb(0_0_0_/_0.6)]">
-            <span>Experience women&apos;s </span>
-            <span className="block sm:inline">sport together</span>
-          </p>
-          <div className="mx-auto mt-10 flex justify-center">
             <BorderGlow
-              className="w-full max-w-sm sm:w-auto sm:max-w-none"
+              className="w-full max-w-[14rem] sm:w-auto sm:max-w-none"
               edgeSensitivity={30}
               glowColor="158 72% 52%"
               backgroundColor="#1a4336"
@@ -106,9 +120,9 @@ export default function Home() {
             >
               <Link
                 href="/signup"
-                className="inline-flex h-12 w-full items-center justify-center px-8 text-base font-semibold text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] dark:focus-visible:outline-white/70"
+                className="inline-flex h-10 w-full items-center justify-center px-6 text-sm font-semibold text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] dark:focus-visible:outline-white/70"
               >
-                Be the first to join.
+                Be the first to join
               </Link>
             </BorderGlow>
           </div>

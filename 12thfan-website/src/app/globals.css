@@ -167,6 +167,22 @@ body {
   }
 }
 
+@keyframes hero-slogan-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-slogan-delayed-fade {
+  opacity: 0;
+  animation: hero-slogan-fade-in 700ms ease-out 1s forwards;
+}
+
 /* Hologram section — white projection stack only (forest wash stays static so it doesn’t slide off the beam) */
 @keyframes hologram-projection-breathe {
   0%,
@@ -238,6 +254,12 @@ body {
   .app-preview-blob-drift,
   .hologram-projection-breathe {
     animation: none;
+  }
+
+  .hero-slogan-delayed-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 
   .group\/app-preview:hover .app-preview-blob-drift {
