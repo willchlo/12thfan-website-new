@@ -14,6 +14,32 @@
   --bg-gradient-from: #e8f2ec;
   --bg-gradient-via: color-mix(in srgb, var(--brand-forest) 48%, #b8dac8);
   --bg-gradient-to: #aabfb0;
+  /* Mostly white / paper + subtle forest — mobile page + desktop homepage hero */
+  --hero-light-forest-bg: #ffffff;
+  --hero-light-forest-image:
+    radial-gradient(
+      ellipse 125% 92% at 50% -8%,
+      color-mix(in srgb, var(--brand-forest) 14%, transparent) 0%,
+      transparent 56%
+    ),
+    radial-gradient(
+      ellipse 88% 68% at 96% 78%,
+      color-mix(in srgb, var(--brand-forest) 18%, transparent) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 72% 58% at 4% 52%,
+      color-mix(in srgb, var(--brand-forest) 11%, transparent) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      168deg,
+      #ffffff 0%,
+      var(--hero-surface) 32%,
+      color-mix(in srgb, var(--brand-forest) 5%, #ffffff) 58%,
+      color-mix(in srgb, var(--brand-forest) 10%, var(--bg-gradient-from)) 82%,
+      color-mix(in srgb, var(--brand-forest) 14%, #eef4f0) 100%
+    );
 }
 
 @theme inline {
@@ -64,6 +90,41 @@ html {
   /* `fixed` repaints the full viewport on scroll and tanks dev + scroll perf */
   background-attachment: scroll;
   animation: page-gradient-drift 42s ease-in-out infinite;
+}
+
+/* Mobile page canvas + desktop homepage hero (sm+): same mostly-light / forest-hint stack */
+@media (max-width: 639px) {
+  html {
+    background-color: var(--hero-light-forest-bg);
+    background-image: var(--hero-light-forest-image);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    animation: mobile-page-gradient-drift 52s ease-in-out infinite;
+  }
+
+  /* Hero: ZoomSnapSection’s motion wrapper defaults to opacity ~0.72 until in-view; on mobile that reads as content sitting under the page wash. */
+  .home-hero-gradient .zoom-snap-motion-inner {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .home-hero-gradient {
+    background-color: var(--hero-light-forest-bg);
+    background-image: var(--hero-light-forest-image);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    animation: mobile-page-gradient-drift 52s ease-in-out infinite;
+  }
+}
+
+@keyframes mobile-page-gradient-drift {
+  0%,
+  100% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  50% {
+    background-position: 3% 2.5%, -2.5% 1.5%, 2% -2%, 0% 0%;
+  }
 }
 
 body {
@@ -244,6 +305,22 @@ body {
     background-attachment: scroll;
     animation: none;
     background-size: initial;
+  }
+
+  @media (max-width: 639px) {
+    html {
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    }
+  }
+
+  .home-hero-gradient {
+    animation: none;
+  }
+
+  @media (min-width: 640px) {
+    .home-hero-gradient {
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    }
   }
 
   .hero-blob-drift-top-left,

@@ -7,7 +7,7 @@ export const previewEvents = [
     emoji: "👥",
   },
   {
-    home: "Five-a-side",
+    home: "MEET UP",
     away: "Mixed teams",
     location: "Local pitch",
     date: "Sun 15 Jun · 12:30",
@@ -35,7 +35,7 @@ export const previewEvents = [
     emoji: "🏟️",
   },
   {
-    home: "Five-a-side",
+    home: "MEET UP",
     away: "Mixed teams",
     location: "Indoor hall",
     date: "Sun 22 Jun · 14:00",
@@ -63,7 +63,7 @@ export const previewEvents = [
     emoji: "🦁",
   },
   {
-    home: "Five-a-side",
+    home: "MEET UP",
     away: "Mixed teams",
     location: "Park pitch",
     date: "Fri 27 Jun · 19:30",
@@ -85,7 +85,7 @@ const PREVIEW_EVENT_IMAGES = [
 
 const GENERIC_HEADLINES = [
   "WORLD CUP WATCH PARTIES",
-  "FIVE A SIDE",
+  "MEET UP",
   "WOMEN'S CHAMPIONS LEAGUE FINAL",
   "MEET UP ANYONE?",
 ] as const;

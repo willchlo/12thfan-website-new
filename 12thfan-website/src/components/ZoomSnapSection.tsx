@@ -52,7 +52,7 @@ export default function ZoomSnapSection({
       {backdrop}
       <motion.div
         className={cn(
-          "relative z-10 w-full transform-gpu backface-hidden",
+          "zoom-snap-motion-inner relative z-10 w-full transform-gpu backface-hidden",
           fullViewport && "min-h-[100svh]",
         )}
         initial={initial}

@@ -53,49 +53,65 @@ export default function Home() {
   return (
     <div className="flex min-h-full flex-col bg-transparent text-zinc-900 dark:text-zinc-50">
       <ZoomSnapSection
-        className="overflow-hidden bg-[color-mix(in_srgb,var(--bg-gradient-from)_55%,#fbf9f3)] dark:bg-zinc-950 max-sm:-mt-[calc(4.5rem+env(safe-area-inset-top,0px))]"
-        backdrop={
-          <>
-            {/* Stronger forest wash — visible against tinted base; warm veil near top for logo contrast */}
-            <div
-              className="pointer-events-none absolute inset-0 z-0 min-h-full bg-[radial-gradient(ellipse_155%_92%_at_50%_108%,color-mix(in_srgb,var(--brand-forest)_44%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_16%,transparent)_48%,transparent_72%)]"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute inset-0 z-0 min-h-full bg-[linear-gradient(to_bottom,#fbf9f3_0%,color-mix(in_srgb,#fbf9f3_65%,transparent)_18%,transparent_32%)] dark:bg-[linear-gradient(to_bottom,#09090b_0%,color-mix(in_srgb,#09090b_82%,transparent)_22%,transparent_40%)]"
-              aria-hidden
-            />
-            {/* Fade into the next section */}
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-36 bg-linear-to-t from-[color-mix(in_srgb,var(--bg-gradient-from)_70%,#fbf9f3)] to-transparent sm:h-44 dark:from-zinc-950 dark:to-transparent"
-              aria-hidden
-            />
-          </>
-        }
+        className="home-hero-gradient overflow-hidden max-sm:overflow-visible max-sm:-mt-[calc(4.5rem+env(safe-area-inset-top,0px))] max-sm:bg-transparent max-sm:z-20"
       >
-        <Image
-          src="/background.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="pointer-events-none absolute inset-0 z-0 object-cover object-center"
-        />
-        <div className="pointer-events-none absolute inset-x-0 top-[calc(1.25rem+env(safe-area-inset-top,0px))] z-20 flex flex-col items-center px-4 sm:top-4">
+        <div className="pointer-events-none absolute inset-x-0 top-[calc(1.25rem+env(safe-area-inset-top,0px))] z-20 hidden items-center px-4 sm:flex sm:flex-col sm:top-32">
           <Image
-            src="/logo-dark-green.png"
+            src="/all-green-logo.png"
             alt="12th Fan"
             width={1553}
             height={1013}
             priority
-            sizes="(max-width: 640px) 52vw, (max-width: 1024px) 42vw, 30rem"
-            className="h-auto w-full max-w-[52rem] object-contain sm:max-w-[68rem] lg:max-w-[88rem]"
+            sizes="(max-width: 1024px) 21vw, 15rem"
+            className="h-auto w-full max-w-[26rem] object-contain sm:max-w-[34rem] lg:max-w-[44rem]"
           />
         </div>
-        <div className="pointer-events-none absolute inset-0 z-0 bg-black/10" aria-hidden />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-32 bg-linear-to-t from-black/30 to-transparent" aria-hidden />
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-4xl -translate-y-3 flex-col px-4 pb-10 text-center max-sm:-translate-y-10 max-sm:pt-[calc(5rem+4.5rem+env(safe-area-inset-top,0px))] sm:-translate-y-4 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
-          <div className="absolute inset-x-0 bottom-24 z-20 mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:bottom-28 sm:gap-5 lg:bottom-32">
+
+        {/* Mobile: flat paper surface (layout `--hero-surface`) — no extra hero gradients */}
+        <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-20 text-center max-sm:pt-[calc(5.75rem+4.5rem+env(safe-area-inset-top,0px))] sm:hidden">
+          <h1 className="mx-auto mt-3 flex w-full max-w-[min(100%,30rem)] -translate-y-8 justify-center">
+            <Image
+              src="/all-green-logo.png"
+              alt="12th Fan"
+              width={1553}
+              height={1013}
+              priority
+              sizes="(max-width: 640px) 96vw, 30rem"
+              className="h-auto w-full object-contain dark:brightness-110"
+            />
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-balance text-3xl tracking-tight text-[var(--brand-forest)] sm:text-4xl [font-family:var(--font-passion-one)]">
+            <span>Experience women&apos;s </span>
+            <span className="block sm:inline">sport together</span>
+          </p>
+          <div className="mx-auto mt-10 flex justify-center">
+            <BorderGlow
+              className="no-static-border w-full max-w-sm sm:w-auto sm:max-w-none"
+              edgeSensitivity={30}
+              glowColor="158 72% 52%"
+              backgroundColor="#1a4336"
+              borderRadius={9999}
+              glowRadius={36}
+              glowIntensity={1.1}
+              coneSpread={26}
+              animated
+              animationLoop
+              colors={["#6ee7b7", "#34d399", "#a7f3d0"]}
+              fillOpacity={0.42}
+            >
+              <Link
+                href="/signup"
+                className="inline-flex h-12 w-full items-center justify-center px-8 text-base font-semibold text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] dark:focus-visible:outline-white/70"
+              >
+                Be the first to join.
+              </Link>
+            </BorderGlow>
+          </div>
+        </div>
+
+        {/* sm+: full-bleed photo hero */}
+        <div className="relative mx-auto hidden min-h-[100svh] w-full max-w-4xl -translate-y-3 flex-col px-4 pb-10 text-center sm:flex sm:-translate-y-4 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
+          <div className="absolute inset-x-0 bottom-32 z-20 mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:bottom-36 sm:gap-5 lg:bottom-44">
             <Image
               src="/slogon.png"
               alt="Experience women's sport together"
@@ -105,7 +121,7 @@ export default function Home() {
               className="hero-slogan-delayed-fade translate-y-44 h-auto w-full max-w-[36rem] object-contain drop-shadow-[0_10px_22px_rgba(0,0,0,0.22)] sm:translate-y-48 sm:max-w-[48rem] lg:translate-y-52 lg:max-w-[64rem]"
             />
             <BorderGlow
-              className="w-full max-w-[14rem] sm:w-auto sm:max-w-none"
+              className="no-static-border w-full max-w-[14rem] sm:w-auto sm:max-w-none"
               edgeSensitivity={30}
               glowColor="158 72% 52%"
               backgroundColor="#1a4336"
@@ -131,7 +147,7 @@ export default function Home() {
 
       <ZoomSnapSection
         id="app-preview"
-        className="group/app-preview relative max-sm:z-[15] max-sm:overflow-x-clip max-sm:overflow-y-visible sm:overflow-hidden max-sm:border-b-0 sm:border-b sm:border-zinc-200/50 bg-linear-to-b from-emerald-50/35 via-white/88 to-white/82 dark:sm:border-zinc-800/50 dark:from-emerald-950/35 dark:via-zinc-950/90 dark:to-zinc-950/85"
+        className="group/app-preview relative max-sm:z-[15] max-sm:overflow-visible sm:overflow-hidden max-sm:border-b-0 sm:border-b sm:border-zinc-200/50 max-sm:bg-transparent dark:max-sm:bg-transparent sm:bg-linear-to-b sm:from-emerald-50/35 sm:via-white/88 sm:to-white/82 dark:sm:border-zinc-800/50 dark:sm:from-emerald-950/35 dark:sm:via-zinc-950/90 dark:sm:to-zinc-950/85"
         backdrop={
           <div
             className="app-preview-blob-drift pointer-events-none absolute left-1/2 top-[20%] z-0 h-[min(50vh,420px)] w-[min(100%,520px)] rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--brand-forest)_14%,transparent),transparent)] blur-[80px]"
@@ -201,7 +217,7 @@ export default function Home() {
       <ZoomSnapSection
         id="hologram-map"
         entrance="fade"
-        className="relative overflow-hidden border-b border-zinc-200/50 bg-linear-to-b from-white via-emerald-50/30 to-white scroll-mt-24 dark:border-zinc-800/50 dark:from-zinc-950 dark:via-emerald-950/25 dark:to-zinc-950 sm:scroll-mt-28"
+        className="relative overflow-hidden border-b border-zinc-200/50 scroll-mt-24 dark:border-zinc-800/50 sm:scroll-mt-28 max-sm:bg-linear-to-b max-sm:from-[var(--brand-forest)] max-sm:via-emerald-100/88 max-sm:via-45% max-sm:to-white max-sm:dark:via-emerald-950/45 max-sm:dark:via-42% max-sm:dark:to-zinc-950 sm:bg-linear-to-b sm:from-white sm:via-emerald-50/30 sm:to-white dark:sm:from-zinc-950 dark:sm:via-emerald-950/25 dark:sm:to-zinc-950"
       >
         <PhoneHologramMapSection />
       </ZoomSnapSection>

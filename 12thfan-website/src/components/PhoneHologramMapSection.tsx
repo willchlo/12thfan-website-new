@@ -152,6 +152,12 @@ export default function PhoneHologramMapSection({ className = "" }: { className?
             >
               EXAMPLE EVENTS NEAR YOU
             </h2>
+            <p className="mt-3 max-w-xl px-3 text-center text-balance text-lg font-semibold text-white [text-shadow:0_1px_2px_rgb(0_0_0_/_0.55),0_2px_12px_rgb(0_0_0_/_0.3)] lg:hidden">
+              In the 12th Fan app, explore fan events near you
+            </p>
+            <p className="mx-auto mt-2 max-w-sm px-3 text-center text-balance text-sm leading-relaxed text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0_/_0.45),0_2px_10px_rgb(0_0_0_/_0.25)] lg:hidden">
+              Tap on any event on a map to see details and join in!
+            </p>
           </div>
 
           {/* Beam + bubbles share height above phone; strip is overlaid bottom so light meets glass with no gap */}
@@ -251,7 +257,7 @@ export default function PhoneHologramMapSection({ className = "" }: { className?
           aria-live="polite"
         >
           <div className="lg:sticky lg:top-[28vh]">
-            <EventDetailCard eventIndex={active} shown={shown} className="min-h-[220px] lg:min-h-[320px]" />
+            <EventDetailCard eventIndex={active} shown={shown} className="min-h-0 lg:min-h-[320px]" />
           </div>
         </aside>
       </div>
@@ -338,13 +344,14 @@ function EventDetailCard({
   const placeholder = (
     <div
       className={cn(
-        "flex min-h-[220px] flex-col justify-center overflow-hidden rounded-none border border-dashed border-zinc-300/90 bg-white/80 px-6 py-12 text-center shadow-[0_18px_48px_-22px_rgb(15_23_42_/_0.12)] backdrop-blur-sm dark:border-zinc-600 dark:bg-zinc-900/40 dark:text-zinc-100 sm:rounded-[1.75rem] lg:min-h-[280px]",
+        "flex min-h-0 flex-col justify-center overflow-hidden max-lg:rounded-none border border-transparent bg-transparent px-0 py-0 text-center shadow-none backdrop-blur-none dark:border-transparent dark:bg-transparent",
+        "lg:min-h-[280px] lg:rounded-[1.75rem] lg:border-dashed lg:border-zinc-300/90 lg:bg-white/80 lg:px-6 lg:py-12 lg:shadow-[0_18px_48px_-22px_rgb(15_23_42_/_0.12)] lg:backdrop-blur-sm lg:dark:border-zinc-600 lg:dark:bg-zinc-900/40 lg:dark:text-zinc-100",
       )}
     >
-      <p className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+      <p className="hidden text-lg font-semibold text-zinc-800 dark:text-zinc-100 lg:block">
         In the 12th Fan app, explore fan events near you
       </p>
-      <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+      <p className="mx-auto hidden max-w-sm text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 lg:mt-3 lg:block">
         Tap on any event on a map to see details and join in!
       </p>
     </div>

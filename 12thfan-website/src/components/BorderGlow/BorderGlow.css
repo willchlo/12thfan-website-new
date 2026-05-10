@@ -13,7 +13,8 @@
   transform: translate3d(0, 0, 0.01px);
   display: grid;
   border: 1px solid rgb(255 255 255 / 15%);
-  background: var(--card-bg, #120f17);
+  /* Outer stays transparent so ::before / ::after (below inner z-index) aren’t painted under an opaque fill — that hides the sweep in Chrome/Safari. */
+  background: transparent;
   overflow: visible;
   box-shadow:
     rgba(0, 0, 0, 0.1) 0px 1px 2px,
@@ -24,15 +25,19 @@
     rgba(0, 0, 0, 0.1) 0px 32px 64px;
 }
 
+.border-glow-card.no-static-border {
+  border: 0;
+}
+
 .border-glow-card::before,
-.border-glow-card::after,
-.border-glow-card > .edge-light {
+.border-glow-card::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   transition: opacity 0.25s ease-out;
-  z-index: -1;
+  /* Above transparent outer box, below .border-glow-inner (see comment on .border-glow-card background). */
+  z-index: 0;
 }
 
 .border-glow-card:not(:hover):not(.sweep-active)::before,
@@ -97,6 +102,9 @@
 
 /* outer glow layer */
 .border-glow-card > .edge-light {
+  position: absolute;
+  border-radius: inherit;
+  transition: opacity 0.25s ease-out;
   inset: calc(var(--glow-padding) * -1);
   pointer-events: none;
   z-index: 1;
@@ -135,10 +143,41 @@
 }
 
 .border-glow-inner {
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: auto;
   z-index: 2;
   border-radius: inherit;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  justify-self: stretch;
+  background: var(--card-bg, #120f17);
+}
+
+/*
+ * Phones / narrow layout: hero sits on light `--hero-surface`; plus-lighter + soft-light can read as “no animation”.
+ * Touch UIs often use the mobile hero even at desktop breakpoints (tablet split view).
+ */
+@media (max-width: 639px), ((hover: none) and (pointer: coarse)) {
+  .border-glow-card::after {
+    mix-blend-mode: normal;
+    opacity: calc(
+      min(
+        1,
+        1.35 * var(--fill-opacity, 0.5) * (var(--edge-proximity) - var(--color-sensitivity)) /
+          (100 - var(--color-sensitivity))
+      )
+    );
+  }
+
+  .border-glow-card > .edge-light {
+    mix-blend-mode: normal;
+    opacity: calc(
+      min(1, 1.2 * (var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)))
+    );
+  }
 }

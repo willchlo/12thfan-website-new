@@ -67,7 +67,7 @@ export default function AppPreviewPhones() {
         </div>
 
         {/* Mobile: staggered collage, ~half off-screen; position on wrapper so Motion owns only rotate */}
-        <div className="relative isolate mx-auto block h-[min(100svh,980px)] w-full max-w-[100vw] overflow-x-clip overflow-y-visible sm:hidden">
+        <div className="relative isolate mx-auto block h-[min(100svh,980px)] w-full max-w-[100vw] overflow-visible sm:hidden">
           <AppPreviewGlow />
           <div className="absolute -top-32 left-[8%] z-[30] -translate-x-[22%]">
             <motion.div

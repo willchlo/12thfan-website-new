@@ -3,7 +3,7 @@
 import {
   useRef,
   useCallback,
-  useEffect,
+  useLayoutEffect,
   type CSSProperties,
   type PointerEvent,
   type ReactNode,
@@ -74,6 +74,7 @@ function animateValue({
   ease = easeOutCubic,
   onUpdate,
   onEnd,
+  shouldAbort,
 }: {
   start?: number;
   end?: number;
@@ -82,16 +83,26 @@ function animateValue({
   ease?: (x: number) => number;
   onUpdate: (v: number) => void;
   onEnd?: () => void;
+  /** When true, stop the rAF chain (Strict Mode dev cleanup). */
+  shouldAbort?: () => boolean;
 }) {
   const t0 = performance.now() + delay;
+  let rafId = 0;
   function tick() {
+    if (shouldAbort?.()) return;
     const elapsed = performance.now() - t0;
     const t = Math.min(elapsed / duration, 1);
     onUpdate(start + (end - start) * ease(t));
-    if (t < 1) requestAnimationFrame(tick);
+    if (t < 1) rafId = requestAnimationFrame(tick);
     else if (onEnd) onEnd();
   }
-  setTimeout(() => requestAnimationFrame(tick), delay);
+  const timeoutId = window.setTimeout(() => {
+    rafId = requestAnimationFrame(tick);
+  }, delay);
+  return () => {
+    window.clearTimeout(timeoutId);
+    cancelAnimationFrame(rafId);
+  };
 }
 
 export type BorderGlowProps = {
@@ -179,67 +190,107 @@ export default function BorderGlow({
     [getEdgeProximity, getCursorAngle],
   );
 
-  useEffect(() => {
-    if (!animated || !cardRef.current) return;
+  useLayoutEffect(() => {
+    if (!animated) return;
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
-    const card = cardRef.current;
     const angleStart = 110;
     const angleEnd = 465;
     let cancelled = false;
     let loopTimer: number | undefined;
+    let kickoffRaf = 0;
+    let retryRaf = 0;
+    let refRetryCount = 0;
     const pauseBetweenMs = 550;
+    const stopAnimations: Array<() => void> = [];
 
     const playSweep = () => {
-      if (cancelled) return;
+      const card = cardRef.current;
+      if (!card || cancelled) return;
+
+      for (const stop of stopAnimations) stop();
+      stopAnimations.length = 0;
+
       card.classList.add("sweep-active");
       card.style.setProperty("--cursor-angle", `${angleStart}deg`);
 
-      animateValue({ duration: 500, onUpdate: (v) => card.style.setProperty("--edge-proximity", String(v)) });
-      animateValue({
-        ease: easeInCubic,
-        duration: 1500,
-        end: 50,
-        onUpdate: (v) => {
-          card.style.setProperty("--cursor-angle", `${((angleEnd - angleStart) * v) / 100 + angleStart}deg`);
-        },
-      });
-      animateValue({
-        ease: easeOutCubic,
-        delay: 1500,
-        duration: 2250,
-        start: 50,
-        end: 100,
-        onUpdate: (v) => {
-          card.style.setProperty("--cursor-angle", `${((angleEnd - angleStart) * v) / 100 + angleStart}deg`);
-        },
-      });
-      animateValue({
-        ease: easeInCubic,
-        delay: 2500,
-        duration: 1500,
-        start: 100,
-        end: 0,
-        onUpdate: (v) => card.style.setProperty("--edge-proximity", String(v)),
-        onEnd: () => {
-          if (cancelled) return;
-          card.classList.remove("sweep-active");
-          if (animationLoop) {
-            loopTimer = window.setTimeout(() => {
-              if (!cancelled) playSweep();
-            }, pauseBetweenMs) as number;
-          }
-        },
-      });
+      const abort = () => cancelled;
+
+      stopAnimations.push(
+        animateValue({
+          duration: 500,
+          shouldAbort: abort,
+          onUpdate: (v) => card.style.setProperty("--edge-proximity", String(v)),
+        }),
+      );
+      stopAnimations.push(
+        animateValue({
+          ease: easeInCubic,
+          duration: 1500,
+          end: 50,
+          shouldAbort: abort,
+          onUpdate: (v) => {
+            card.style.setProperty("--cursor-angle", `${((angleEnd - angleStart) * v) / 100 + angleStart}deg`);
+          },
+        }),
+      );
+      stopAnimations.push(
+        animateValue({
+          ease: easeOutCubic,
+          delay: 1500,
+          duration: 2250,
+          start: 50,
+          end: 100,
+          shouldAbort: abort,
+          onUpdate: (v) => {
+            card.style.setProperty("--cursor-angle", `${((angleEnd - angleStart) * v) / 100 + angleStart}deg`);
+          },
+        }),
+      );
+      stopAnimations.push(
+        animateValue({
+          ease: easeInCubic,
+          delay: 2500,
+          duration: 1500,
+          start: 100,
+          end: 0,
+          shouldAbort: abort,
+          onUpdate: (v) => card.style.setProperty("--edge-proximity", String(v)),
+          onEnd: () => {
+            if (cancelled) return;
+            card.classList.remove("sweep-active");
+            if (animationLoop) {
+              loopTimer = window.setTimeout(() => {
+                if (!cancelled) playSweep();
+              }, pauseBetweenMs);
+            }
+          },
+        }),
+      );
     };
 
-    playSweep();
+    /** Ref + paint timing in dev (Strict Mode) can leave `cardRef` unset on the first layout tick. */
+    const kickoff = () => {
+      if (cancelled) return;
+      if (!cardRef.current) {
+        if (refRetryCount++ > 120) return;
+        retryRaf = requestAnimationFrame(kickoff);
+        return;
+      }
+      playSweep();
+    };
+
+    kickoffRaf = requestAnimationFrame(kickoff);
 
     return () => {
       cancelled = true;
+      cancelAnimationFrame(kickoffRaf);
+      cancelAnimationFrame(retryRaf);
       if (loopTimer !== undefined) window.clearTimeout(loopTimer);
+      for (const stop of stopAnimations) stop();
+      cardRef.current?.classList.remove("sweep-active");
     };
   }, [animated, animationLoop]);
 
