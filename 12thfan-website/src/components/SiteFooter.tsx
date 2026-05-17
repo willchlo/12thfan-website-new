@@ -90,6 +90,17 @@ export default function SiteFooter() {
               }}
             />
           </Link>
+          <nav
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-white [text-shadow:0_1px_3px_rgb(0_0_0_/_0.45)]"
+            aria-label="Legal"
+          >
+            <Link
+              href="/privacy"
+              className="underline-offset-2 transition-opacity hover:underline hover:opacity-90"
+            >
+              Privacy Policy
+            </Link>
+          </nav>
           <p className="mt-2 max-w-xl text-center text-xs leading-relaxed text-white [text-shadow:0_1px_3px_rgb(0_0_0_/_0.45)]">
             © <time dateTime={String(year)}>{year}</time> 12th Fan. All rights reserved.
           </p>
