@@ -8,13 +8,10 @@ import IPhone3DMockup from "@/components/IPhone3DMockup";
 function AppPreviewGlow() {
   return (
     <div
-      className="pointer-events-none absolute left-1/2 top-[58%] z-0 h-[min(52vh,440px)] w-[min(160vw,760px)] -translate-x-1/2 -translate-y-1/2 opacity-40 transition-opacity duration-500 ease-out group-hover/app-preview:opacity-100 motion-reduce:transition-none motion-reduce:group-hover/app-preview:opacity-80 max-sm:top-[42%] max-sm:h-[min(44vh,360px)] max-sm:w-[min(190vw,640px)]"
+      className="pointer-events-none absolute left-1/2 top-[58%] z-0 h-[min(44vh,360px)] w-[min(140vw,640px)] -translate-x-1/2 -translate-y-1/2 opacity-70 max-sm:top-[42%] max-sm:h-[min(40vh,300px)]"
       aria-hidden
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_72%_64%_at_50%_34%,color-mix(in_srgb,var(--brand-forest)_82%,transparent)_0%,color-mix(in_srgb,#34d399_58%,transparent)_20%,color-mix(in_srgb,#6ee7b7_42%,transparent)_38%,color-mix(in_srgb,#a7f3d0_24%,transparent)_54%,transparent_80%)] opacity-100 blur-[28px] sm:blur-[38px]" />
-      <div className="absolute inset-[-6%_-10%_-18%_-10%] bg-[radial-gradient(ellipse_95%_85%_at_50%_40%,color-mix(in_srgb,#ecfdf5_62%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_38%,transparent)_18%,color-mix(in_srgb,#34d399_28%,transparent)_38%,transparent_68%)] opacity-100 blur-[56px] sm:blur-[72px]" />
-      <div className="absolute inset-[-18%_-22%_-32%_-22%] bg-[radial-gradient(ellipse_100%_88%_at_50%_48%,color-mix(in_srgb,#d1fae5_35%,transparent)_0%,color-mix(in_srgb,var(--brand-forest)_22%,transparent)_35%,transparent_62%)] opacity-90 blur-[90px] sm:blur-[110px]" />
-      <div className="absolute left-1/2 top-[32%] h-[min(26vh,220px)] w-[min(56vw,270px)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_68%_62%_at_50%_46%,color-mix(in_srgb,#fbf9f3_22%,var(--brand-forest))_0%,color-mix(in_srgb,var(--brand-forest)_95%,transparent)_8%,color-mix(in_srgb,#34d399_78%,transparent)_26%,color-mix(in_srgb,#6ee7b7_48%,transparent)_48%,transparent_76%)] opacity-100 blur-[14px] sm:blur-[18px]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_40%,color-mix(in_srgb,var(--brand-mid)_28%,transparent)_0%,transparent_72%)] blur-[48px] sm:blur-[56px]" />
     </div>
   );
 }
@@ -46,21 +43,21 @@ export default function AppPreviewPhones() {
           <IPhone3DMockup
             fan="left"
             size="prominent"
-            screenSrc="/app-preview-left.png"
-            screenAlt="12th Fan app home screen"
+            screenSrc="/app-preview-login-v2.png"
+            screenAlt="12th Fan login screen"
             className="relative z-[1] shrink-0"
           />
           <IPhone3DMockup
             fan="center"
             size="prominent"
-            screenSrc="/app-preview-center.png"
-            screenAlt="12th Fan app home screen with events and navigation"
+            screenSrc="/app-preview-home-v2.png"
+            screenAlt="12th Fan home screen with events near you"
             className="relative z-10 shrink-0"
           />
           <IPhone3DMockup
             fan="right"
             size="prominent"
-            screenSrc="/app-preview-events.png"
+            screenSrc="/app-preview-map-v2.png"
             screenAlt="12th Fan events map showing matches and gatherings in the UK"
             className="relative z-[1] shrink-0"
           />
@@ -77,8 +74,8 @@ export default function AppPreviewPhones() {
               <IPhone3DMockup
                 fan="flat"
                 size="prominent"
-                screenSrc="/app-preview-left.png"
-                screenAlt="12th Fan app home screen"
+                screenSrc="/app-preview-login-v2.png"
+                screenAlt="12th Fan login screen"
                 className="relative"
               />
             </motion.div>
@@ -91,8 +88,8 @@ export default function AppPreviewPhones() {
               <IPhone3DMockup
                 fan="flat"
                 size="prominent"
-                screenSrc="/app-preview-center.png"
-                screenAlt="12th Fan app home screen with events and navigation"
+                screenSrc="/app-preview-home-v2.png"
+                screenAlt="12th Fan home screen with events near you"
                 className="relative"
               />
             </motion.div>
@@ -105,7 +102,7 @@ export default function AppPreviewPhones() {
               <IPhone3DMockup
                 fan="flat"
                 size="prominent"
-                screenSrc="/app-preview-events.png"
+                screenSrc="/app-preview-map-v2.png"
                 screenAlt="12th Fan events map showing matches and gatherings in the UK"
                 className="relative"
               />

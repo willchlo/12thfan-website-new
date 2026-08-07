@@ -10,18 +10,20 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="relative flex min-h-0 w-full flex-1 flex-col bg-zinc-50 dark:bg-zinc-950">
+    <main className="relative flex min-h-0 w-full flex-1 flex-col">
       <div className="relative z-10 mx-auto w-full max-w-lg flex-1 px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-          <Link href="/" className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-300">
+        <p className="text-sm font-medium text-[var(--brand-mid)]">
+          <Link href="/" className="transition-opacity hover:opacity-80">
             ← Back to home
           </Link>
         </p>
-        <h1 className="mt-8 text-3xl font-bold tracking-tight sm:text-4xl">Contact us</h1>
-        <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
+        <h1 className="mt-8 text-3xl font-bold tracking-tight text-[var(--brand-forest)] sm:text-4xl">Contact us</h1>
+        <p className="mt-4 text-lg text-zinc-600">
           Send us a note — questions, partnerships, feedback, we&apos;d love to hear from you.
         </p>
-        <ContactForm />
+        <div className="mt-10">
+          <ContactForm />
+        </div>
       </div>
     </main>
   );

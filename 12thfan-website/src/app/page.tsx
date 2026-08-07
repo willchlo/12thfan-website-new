@@ -1,29 +1,14 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import BorderGlow from "@/components/BorderGlow/BorderGlow";
 import AppPreviewPhones from "@/components/AppPreviewPhones";
-import HomeJoinSection from "@/components/HomeJoinSection";
-import HomeSocialSection from "@/components/HomeSocialSection";
-import PhoneHologramMapSection from "@/components/PhoneHologramMapSection";
+import HomeContactSection from "@/components/HomeContactSection";
 import ZoomSnapSection from "@/components/ZoomSnapSection";
 import { cn } from "@/lib/utils";
 
-const featureSectionCardClass =
-  "group relative isolate rounded-2xl border border-zinc-200/80 bg-white p-8 text-center shadow-sm transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-[5px] hover:border-emerald-300 hover:shadow-[0_22px_55px_-18px_rgb(16_185_129_/_0.34),0_0_52px_-14px_rgb(52_211_153_/_0.45),0_0_92px_-28px_rgb(110_231_183_/_0.38)] dark:border-zinc-800 dark:bg-zinc-900/40 dark:shadow-[0_8px_30px_-12px_rgb(0_0_0_/_0.35)] dark:hover:border-emerald-400/65 dark:hover:shadow-[0_28px_70px_-16px_rgb(16_185_129_/_0.48),0_0_72px_-12px_rgb(52_211_153_/_0.52),0_0_110px_-26px_rgb(167_243_208_/_0.26)]";
+/** Official App Store listing for 12th Fan */
+const APP_STORE_URL = "https://apps.apple.com/app/id6760150584";
 
-/** Emerald pool-of-light under a feature card; only visible on card hover */
-function FeatureCardUnderGlow() {
-  return (
-    <div
-      className="pointer-events-none absolute -bottom-2 left-1/2 z-0 h-[min(220px,48vw)] w-[min(124%,380px)] -translate-x-1/2 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100 motion-reduce:transition-none"
-      aria-hidden
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_72%_at_50%_0%,color-mix(in_srgb,#6ee7b7_52%,transparent)_0%,color-mix(in_srgb,#34d399_32%,transparent)_38%,color-mix(in_srgb,var(--brand-forest)_18%,transparent)_62%,transparent_82%)] blur-[48px] sm:blur-[56px]" />
-      <div className="absolute left-1/2 top-[38%] h-[min(160px,36vw)] w-[min(108%,320px)] -translate-x-1/2 bg-[radial-gradient(ellipse_100%_80%_at_50%_20%,color-mix(in_srgb,#a7f3d0_38%,transparent)_0%,color-mix(in_srgb,#34d399_22%,transparent)_45%,transparent_72%)] blur-[64px] sm:blur-[76px]" />
-    </div>
-  );
-}
+const featureItemClass = "mx-auto max-w-sm text-center";
 
 function CalendarIcon({ className }: { className?: string }) {
   return (
@@ -51,106 +36,44 @@ function CommunityIcon({ className }: { className?: string }) {
 
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-col bg-transparent text-zinc-900 dark:text-zinc-50">
+    <div className="flex min-h-full flex-col bg-transparent text-[var(--foreground)]">
       <ZoomSnapSection
-        className="home-hero-gradient overflow-hidden max-sm:overflow-visible max-sm:-mt-[calc(4.5rem+env(safe-area-inset-top,0px))] max-sm:bg-transparent max-sm:z-20"
+        className="home-hero-gradient overflow-hidden max-sm:-mt-[calc(4.5rem+env(safe-area-inset-top,0px))] max-sm:z-20"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-[calc(1.25rem+env(safe-area-inset-top,0px))] z-20 hidden items-center px-4 sm:flex sm:flex-col sm:top-32">
-          <Image
-            src="/all-green-logo.png"
-            alt="12th Fan"
-            width={1553}
-            height={1013}
-            priority
-            sizes="(max-width: 1024px) 21vw, 15rem"
-            className="h-auto w-full max-w-[26rem] object-contain sm:max-w-[34rem] lg:max-w-[44rem]"
-          />
-        </div>
-
-        {/* Mobile: flat paper surface (layout `--hero-surface`) — no extra hero gradients */}
-        <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-4 pb-20 text-center max-sm:pt-[calc(5.75rem+4.5rem+env(safe-area-inset-top,0px))] sm:hidden">
-          <h1 className="mx-auto mt-3 flex w-full max-w-[min(100%,30rem)] -translate-y-8 justify-center">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-3xl flex-col items-center justify-center px-4 pb-16 text-center max-sm:pt-[calc(5.75rem+4.5rem+env(safe-area-inset-top,0px))] sm:px-6 sm:pb-20 lg:px-8">
+          <h1 className="mx-auto flex w-full max-w-[min(100%,16rem)] justify-center sm:max-w-[18rem] lg:max-w-[24rem]">
             <Image
               src="/all-green-logo.png"
               alt="12th Fan"
-              width={1553}
-              height={1013}
+              width={1792}
+              height={1284}
               priority
-              sizes="(max-width: 640px) 96vw, 30rem"
-              className="h-auto w-full object-contain dark:brightness-110"
+              sizes="(max-width: 640px) 64vw, (max-width: 1024px) 18rem, 24rem"
+              className="h-auto w-full object-contain"
             />
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-balance text-3xl tracking-tight text-[var(--brand-forest)] sm:text-4xl [font-family:var(--font-passion-one)]">
-            <span>Experience women&apos;s </span>
-            <span className="block sm:inline">sport together</span>
+          <p className="hero-slogan-delayed-fade mx-auto mt-7 max-w-xl text-balance text-xl tracking-tight text-[var(--brand-forest)] sm:mt-8 sm:text-2xl lg:text-3xl [font-family:var(--font-passion-one)]">
+            Your Women&apos;s Sport App.
           </p>
-          <div className="mx-auto mt-10 flex justify-center">
-            <BorderGlow
-              className="no-static-border w-full max-w-sm sm:w-auto sm:max-w-none"
-              edgeSensitivity={30}
-              glowColor="158 72% 52%"
-              backgroundColor="#1a4336"
-              borderRadius={9999}
-              glowRadius={36}
-              glowIntensity={1.1}
-              coneSpread={26}
-              animated
-              animationLoop
-              colors={["#6ee7b7", "#34d399", "#a7f3d0"]}
-              fillOpacity={0.42}
+          <div className="hero-slogan-delayed-fade mx-auto mt-9 flex justify-center sm:mt-10">
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-14 min-w-[16rem] items-center justify-center rounded-2xl bg-linear-to-br from-[var(--brand-light)] via-[var(--brand-mid)] to-[var(--brand-forest)] px-10 text-xl font-semibold uppercase tracking-tight text-white shadow-[0_8px_24px_-10px_color-mix(in_srgb,var(--brand-forest)_55%,transparent)] transition-[filter,transform] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] active:scale-[0.98] sm:h-16 sm:min-w-[18rem] sm:px-12 sm:text-2xl [font-family:var(--font-passion-one)]"
             >
-              <Link
-                href="/signup"
-                className="inline-flex h-12 w-full items-center justify-center px-8 text-base font-semibold text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] dark:focus-visible:outline-white/70"
-              >
-                Be the first to join.
-              </Link>
-            </BorderGlow>
-          </div>
-        </div>
-
-        {/* sm+: full-bleed photo hero */}
-        <div className="relative mx-auto hidden min-h-[100svh] w-full max-w-4xl -translate-y-3 flex-col px-4 pb-10 text-center sm:flex sm:-translate-y-4 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
-          <div className="absolute inset-x-0 bottom-32 z-20 mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:bottom-36 sm:gap-5 lg:bottom-44">
-            <Image
-              src="/slogon.png"
-              alt="Experience women's sport together"
-              width={1200}
-              height={250}
-              sizes="(max-width: 640px) 72vw, (max-width: 1024px) 56vw, 44rem"
-              className="hero-slogan-delayed-fade translate-y-44 h-auto w-full max-w-[36rem] object-contain drop-shadow-[0_10px_22px_rgba(0,0,0,0.22)] sm:translate-y-48 sm:max-w-[48rem] lg:translate-y-52 lg:max-w-[64rem]"
-            />
-            <BorderGlow
-              className="no-static-border w-full max-w-[14rem] sm:w-auto sm:max-w-none"
-              edgeSensitivity={30}
-              glowColor="158 72% 52%"
-              backgroundColor="#1a4336"
-              borderRadius={9999}
-              glowRadius={36}
-              glowIntensity={1.1}
-              coneSpread={26}
-              animated
-              animationLoop
-              colors={["#6ee7b7", "#34d399", "#a7f3d0"]}
-              fillOpacity={0.42}
-            >
-              <Link
-                href="/signup"
-                className="inline-flex h-10 w-full items-center justify-center px-6 text-sm font-semibold text-white transition-[filter] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] dark:focus-visible:outline-white/70"
-              >
-                Be the first to join
-              </Link>
-            </BorderGlow>
+              Download 12th Fan
+            </a>
           </div>
         </div>
       </ZoomSnapSection>
 
       <ZoomSnapSection
         id="app-preview"
-        className="group/app-preview relative max-sm:z-[15] max-sm:overflow-visible sm:overflow-hidden max-sm:border-b-0 sm:border-b sm:border-zinc-200/50 max-sm:bg-transparent dark:max-sm:bg-transparent sm:bg-linear-to-b sm:from-emerald-50/35 sm:via-white/88 sm:to-white/82 dark:sm:border-zinc-800/50 dark:sm:from-emerald-950/35 dark:sm:via-zinc-950/90 dark:sm:to-zinc-950/85"
+        className="group/app-preview relative max-sm:z-[15] max-sm:overflow-x-clip max-sm:overflow-y-visible sm:overflow-hidden"
         backdrop={
           <div
-            className="app-preview-blob-drift pointer-events-none absolute left-1/2 top-[20%] z-0 h-[min(50vh,420px)] w-[min(100%,520px)] rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--brand-forest)_14%,transparent),transparent)] blur-[80px]"
+            className="app-preview-blob-drift pointer-events-none absolute left-1/2 top-[45%] z-0 h-[min(42vh,360px)] w-[min(90%,480px)] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--brand-mid)_16%,transparent),transparent_70%)] blur-[72px]"
             aria-hidden
           />
         }
@@ -161,82 +84,56 @@ export default function Home() {
       <ZoomSnapSection
         id="features"
         fullViewport={false}
-        className="relative border-b border-emerald-950/25 bg-[var(--brand-forest)] pt-16 pb-12 dark:border-emerald-900/40 sm:pt-20 sm:pb-14"
+        className="relative scroll-mt-24 pt-16 pb-14 sm:scroll-mt-28 sm:pt-20 sm:pb-16"
       >
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Everything in one place</h2>
-            <p className="mt-4 text-lg leading-relaxed text-emerald-100/90">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-[var(--brand-forest)] sm:text-4xl">
+              Everything in one place
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-zinc-600">
               From match days to meetups. 12th Fan helps you stay close to the game and the people who love it.
               We&apos;re building a safe, inclusive social space where everyone can enjoy sport and connect freely.
             </p>
           </div>
-          <div className="relative mt-14">
-            <ul className="relative z-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-              <li className={featureSectionCardClass}>
-                <FeatureCardUnderGlow />
-                <div className="relative z-10">
-                  <div className="mx-auto inline-flex rounded-xl bg-emerald-100 p-3 text-emerald-700 transition-[color,background-color] duration-[1200ms] ease-in-out group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-950/80 dark:text-emerald-400 dark:group-hover:bg-emerald-600 dark:group-hover:text-white">
-                    <CalendarIcon className="h-7 w-7" />
-                  </div>
-                  <h3 className="mt-6 text-xl font-semibold tracking-tight">Discover Events</h3>
-                  <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Browse fixtures, watch parties, and grassroots matches tailored to the teams and cities you care about.
-                  </p>
-                </div>
-              </li>
-              <li className={featureSectionCardClass}>
-                <FeatureCardUnderGlow />
-                <div className="relative z-10">
-                  <div className="mx-auto inline-flex rounded-xl bg-emerald-100 p-3 text-emerald-700 transition-[color,background-color] duration-[1200ms] ease-in-out group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-950/80 dark:text-emerald-400 dark:group-hover:bg-emerald-600 dark:group-hover:text-white">
-                    <FansIcon className="h-7 w-7" />
-                  </div>
-                  <h3 className="mt-6 text-xl font-semibold tracking-tight">Meet Fans Near You</h3>
-                  <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Find supporters in your area, swap stories, and turn solo viewing into shared moments on the terrace.
-                  </p>
-                </div>
-              </li>
-              <li className={cn(featureSectionCardClass, "sm:col-span-2 lg:col-span-1")}>
-                <FeatureCardUnderGlow />
-                <div className="relative z-10">
-                  <div className="mx-auto inline-flex rounded-xl bg-emerald-100 p-3 text-emerald-700 transition-[color,background-color] duration-[1200ms] ease-in-out group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-950/80 dark:text-emerald-400 dark:group-hover:bg-emerald-600 dark:group-hover:text-white">
-                    <CommunityIcon className="h-7 w-7" />
-                  </div>
-                  <h3 className="mt-6 text-xl font-semibold tracking-tight">Build Your Community</h3>
-                  <p className="mt-3 leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Create groups, host events, and grow a space where women&apos;s sport is always the main event.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <ul className="relative z-10 mt-14 grid gap-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-10">
+            <li className={featureItemClass}>
+              <div className="mx-auto inline-flex text-[var(--brand-mid)]">
+                <CalendarIcon className="h-8 w-8" />
+              </div>
+              <h3 className="mt-5 text-xl font-semibold tracking-tight text-[var(--brand-forest)]">Discover Events</h3>
+              <p className="mt-3 leading-relaxed text-zinc-600">
+                Discover women&apos;s sport near you, from upcoming fixtures and watch parties to grassroots matches and events.
+              </p>
+            </li>
+            <li className={featureItemClass}>
+              <div className="mx-auto inline-flex text-[var(--brand-mid)]">
+                <FansIcon className="h-8 w-8" />
+              </div>
+              <h3 className="mt-5 text-xl font-semibold tracking-tight text-[var(--brand-forest)]">Meet Fans Near You</h3>
+              <p className="mt-3 leading-relaxed text-zinc-600">
+                Find supporters in your area, swap stories, and turn solo viewing into shared moments on the terrace.
+              </p>
+            </li>
+            <li className={cn(featureItemClass, "sm:col-span-2 lg:col-span-1")}>
+              <div className="mx-auto inline-flex text-[var(--brand-mid)]">
+                <CommunityIcon className="h-8 w-8" />
+              </div>
+              <h3 className="mt-5 text-xl font-semibold tracking-tight text-[var(--brand-forest)]">Build Your Community</h3>
+              <p className="mt-3 leading-relaxed text-zinc-600">
+                Create groups, host events, and grow a space where women&apos;s sport is always the main event.
+              </p>
+            </li>
+          </ul>
         </div>
       </ZoomSnapSection>
 
       <ZoomSnapSection
-        id="hologram-map"
-        entrance="fade"
-        className="relative overflow-hidden border-b border-zinc-200/50 scroll-mt-24 dark:border-zinc-800/50 sm:scroll-mt-28 max-sm:bg-linear-to-b max-sm:from-[var(--brand-forest)] max-sm:via-emerald-100/88 max-sm:via-45% max-sm:to-white max-sm:dark:via-emerald-950/45 max-sm:dark:via-42% max-sm:dark:to-zinc-950 sm:bg-linear-to-b sm:from-white sm:via-emerald-50/30 sm:to-white dark:sm:from-zinc-950 dark:sm:via-emerald-950/25 dark:sm:to-zinc-950"
+        id="contact"
+        className="scroll-mt-24 sm:scroll-mt-28"
       >
-        <PhoneHologramMapSection />
+        <HomeContactSection />
       </ZoomSnapSection>
-
-      <ZoomSnapSection
-        id="events-social"
-        fullViewport={false}
-        className="scroll-mt-24 border-t border-zinc-200/50 bg-zinc-50 dark:border-zinc-800/50 dark:bg-zinc-950 sm:scroll-mt-28"
-      >
-        <HomeSocialSection />
-      </ZoomSnapSection>
-
-      <ZoomSnapSection
-        id="join-12th-fan"
-        className="scroll-mt-24 border-t border-zinc-200/50 bg-zinc-50 dark:border-zinc-800/50 dark:bg-zinc-950 sm:scroll-mt-28"
-      >
-        <HomeJoinSection />
-      </ZoomSnapSection>
-
     </div>
   );
 }

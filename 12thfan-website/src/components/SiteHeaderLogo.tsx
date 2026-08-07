@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const imgClass =
-  "h-[4.25rem] max-h-[4.25rem] w-auto max-w-[min(280px,72vw)] object-contain object-left brightness-0 invert sm:h-14 sm:max-h-none sm:max-w-none";
+  "h-[3.75rem] max-h-[3.75rem] w-auto max-w-[min(240px,68vw)] object-contain object-center sm:h-12 sm:max-h-none sm:max-w-none sm:object-left";
 
 export default function SiteHeaderLogo() {
   const pathname = usePathname();
@@ -25,10 +25,10 @@ export default function SiteHeaderLogo() {
         aria-label="Back to top"
       >
         <Image
-          src="/logo-clear.png"
+          src="/logo-white.png"
           alt=""
-          width={1553}
-          height={1013}
+          width={896}
+          height={642}
           priority
           className={imgClass}
           sizes="(max-width: 640px) 280px, 260px"
@@ -45,10 +45,10 @@ export default function SiteHeaderLogo() {
       aria-label="12th Fan home"
     >
       <Image
-        src="/logo-clear.png"
+        src="/logo-white.png"
         alt="12th Fan"
-        width={1553}
-        height={1013}
+        width={896}
+        height={642}
         priority
         className={imgClass}
         sizes="(max-width: 640px) 280px, 260px"

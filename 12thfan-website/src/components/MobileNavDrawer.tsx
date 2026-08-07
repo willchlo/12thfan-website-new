@@ -8,10 +8,9 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const items = [
+  { href: "/#contact", label: "Contact" },
   { href: "/#features", label: "The App" },
-  { href: "/#hologram-map", label: "Events" },
-  { href: "/#events-social", label: "Social" },
-  { href: "/contact", label: "Contact" },
+  { href: "https://apps.apple.com/app/id6760150584", label: "Download", external: true },
 ] as const;
 
 const spring = { type: "spring" as const, damping: 30, stiffness: 340 };
@@ -85,7 +84,7 @@ export default function MobileNavDrawer() {
               role="dialog"
               aria-modal="true"
               aria-label="Site menu"
-              className="fixed inset-y-0 right-0 z-[201] flex w-[min(20rem,calc(100vw-2.5rem))] flex-col bg-[var(--brand-forest)] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] shadow-[-12px_0_40px_rgba(0,0,0,0.28)]"
+              className="fixed inset-y-0 right-0 z-[201] flex w-[min(20rem,calc(100vw-2.5rem))] flex-col bg-linear-to-b from-[var(--brand-mid)] to-[var(--brand-forest)] pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] shadow-[-12px_0_40px_rgba(0,0,0,0.22)]"
               initial={reduce ? { x: 0 } : { x: "100%" }}
               animate={{ x: 0 }}
               exit={reduce ? { x: 0 } : { x: "100%" }}
@@ -114,18 +113,32 @@ export default function MobileNavDrawer() {
                 animate="show"
                 variants={listVariants}
               >
-                {items.map(({ href, label }) => (
-                  <motion.div key={href} variants={itemVariants}>
-                    <Link
-                      href={href}
-                      className={cn(
-                        "flex min-h-12 items-center rounded-lg px-3 text-left text-lg font-semibold uppercase tracking-[0.04em] text-white/95 transition-colors [font-family:var(--font-passion-one)]",
-                        "hover:bg-white/10 active:bg-white/15",
-                      )}
-                      onClick={close}
-                    >
-                      {label}
-                    </Link>
+                {items.map((item) => (
+                  <motion.div key={item.href} variants={itemVariants}>
+                    {"external" in item && item.external ?
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                          "flex min-h-12 items-center rounded-lg px-3 text-left text-lg font-semibold uppercase tracking-[0.04em] text-white/95 transition-colors [font-family:var(--font-passion-one)]",
+                          "hover:bg-white/10 active:bg-white/15",
+                        )}
+                        onClick={close}
+                      >
+                        {item.label}
+                      </a>
+                    : <Link
+                        href={item.href}
+                        className={cn(
+                          "flex min-h-12 items-center rounded-lg px-3 text-left text-lg font-semibold uppercase tracking-[0.04em] text-white/95 transition-colors [font-family:var(--font-passion-one)]",
+                          "hover:bg-white/10 active:bg-white/15",
+                        )}
+                        onClick={close}
+                      >
+                        {item.label}
+                      </Link>
+                    }
                   </motion.div>
                 ))}
               </motion.nav>

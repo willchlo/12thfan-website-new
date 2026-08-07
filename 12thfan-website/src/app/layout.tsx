@@ -33,7 +33,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#1a4336",
+  themeColor: "#0c3a2d",
 };
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     default: "12th Fan",
     template: "%s | 12th Fan",
   },
-  description: "Experience women's sport together",
+  description: "Your Women's Sport App.",
   icons: {
     icon: [{ url: `/favicon.png?v=${FAVICON_VERSION}`, type: "image/png", sizes: "320x320" }],
     shortcut: `/favicon.png?v=${FAVICON_VERSION}`,

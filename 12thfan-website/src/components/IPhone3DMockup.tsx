@@ -156,6 +156,7 @@ export default function IPhone3DMockup({
             >
               <div className="absolute inset-0 z-20">
                 <Image
+                  key={screenSrc}
                   src={screenSrc}
                   alt={screenAlt}
                   width={470}
@@ -168,7 +169,8 @@ export default function IPhone3DMockup({
                     : "(max-width:640px) 72vw, 260px"
                   }
                   className="h-full w-full object-cover object-top"
-                  priority={fan === "center" && size === "prominent"}
+                  priority={size === "prominent"}
+                  unoptimized
                 />
               </div>
 
