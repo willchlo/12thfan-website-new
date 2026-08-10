@@ -9,23 +9,37 @@ const ENQUIRY_TYPES = [
   { value: "feedback", label: "Feedback" },
   { value: "partnership", label: "Partnership" },
   { value: "account_deletion", label: "Delete my 12th Fan account" },
+  { value: "personal_data_deletion", label: "Request deletion of my personal data" },
   { value: "other", label: "Other" },
 ] as const;
 
 type EnquiryType = (typeof ENQUIRY_TYPES)[number]["value"];
+type SubmittedSpecial = "account_deletion" | "personal_data_deletion" | null;
 
 const fieldLabelClass =
   "block text-sm font-medium text-zinc-700 [[data-on-dark]_&]:text-white/90";
 const fieldInputClass =
   "mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand-mid)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--brand-mid)_20%,transparent)] disabled:opacity-60";
 
+function successMessage(kind: SubmittedSpecial) {
+  if (kind === "account_deletion") {
+    return "Thanks — we\u2019ve received your account deletion request and will process it soon.";
+  }
+  if (kind === "personal_data_deletion") {
+    return "Thanks — we\u2019ve received your personal data deletion request and will process it soon.";
+  }
+  return "Thanks — we\u2019ve received your message and will get back to you soon.";
+}
+
 export function ContactForm({ className }: { className?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [enquiryType, setEnquiryType] = useState<EnquiryType>("general");
-  const [submittedDeletion, setSubmittedDeletion] = useState(false);
+  const [submittedSpecial, setSubmittedSpecial] = useState<SubmittedSpecial>(null);
 
   const isAccountDeletion = enquiryType === "account_deletion";
+  const isPersonalDataDeletion = enquiryType === "personal_data_deletion";
+  const usesAccountEmail = isAccountDeletion || isPersonalDataDeletion;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,7 +49,8 @@ export function ContactForm({ className }: { className?: string }) {
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
     const reason = String(fd.get("enquiryType") ?? enquiryType).trim() as EnquiryType;
-    const deletionRequest = reason === "account_deletion";
+    const special: SubmittedSpecial =
+      reason === "account_deletion" || reason === "personal_data_deletion" ? reason : null;
 
     setStatus("loading");
     setErrorMessage(null);
@@ -54,12 +69,8 @@ export function ContactForm({ className }: { className?: string }) {
         return;
       }
 
-      window.alert(
-        deletionRequest
-          ? "Thanks — we've received your account deletion request and will process it soon."
-          : "Thanks — we've received your message and will get back to you soon.",
-      );
-      setSubmittedDeletion(deletionRequest);
+      window.alert(successMessage(special));
+      setSubmittedSpecial(special);
       setStatus("success");
       setEnquiryType("general");
       form.reset();
@@ -72,9 +83,7 @@ export function ContactForm({ className }: { className?: string }) {
   if (status === "success") {
     return (
       <p className="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/80 px-6 py-4 text-center text-base text-emerald-900">
-        {submittedDeletion
-          ? "Thanks — we\u2019ve received your account deletion request and will process it soon."
-          : "Thanks — we\u2019ve received your message and will get back to you soon."}
+        {successMessage(submittedSpecial)}
       </p>
     );
   }
@@ -129,6 +138,19 @@ export function ContactForm({ className }: { className?: string }) {
         </div>
       : null}
 
+      {isPersonalDataDeletion ?
+        <div
+          className="space-y-3 rounded-xl border border-zinc-200 bg-zinc-50/90 px-4 py-4 text-sm leading-relaxed text-zinc-700"
+          role="note"
+        >
+          <p>
+            Use this form to request deletion or anonymisation of personal data associated with your 12th Fan account
+            without necessarily deleting your account. Please use the email address associated with your 12th Fan
+            account and explain what data you would like deleted.
+          </p>
+        </div>
+      : null}
+
       <div>
         <label htmlFor="contact-name" className={fieldLabelClass}>
           Name
@@ -148,7 +170,7 @@ export function ContactForm({ className }: { className?: string }) {
 
       <div>
         <label htmlFor="contact-email" className={fieldLabelClass}>
-          {isAccountDeletion ? "Email linked to your 12th Fan account" : "Email"}
+          {usesAccountEmail ? "Email linked to your 12th Fan account" : "Email"}
         </label>
         <input
           id="contact-email"
@@ -175,7 +197,9 @@ export function ContactForm({ className }: { className?: string }) {
           placeholder={
             isAccountDeletion
               ? "Please confirm you want your 12th Fan account deleted, and share any extra details we may need."
-              : "How can we help?"
+              : isPersonalDataDeletion
+                ? "Please explain what personal data you would like deleted or anonymised."
+                : "How can we help?"
           }
           disabled={status === "loading"}
           className={cn(fieldInputClass, "resize-y")}
@@ -190,7 +214,7 @@ export function ContactForm({ className }: { className?: string }) {
         >
           {status === "loading"
             ? "Sending…"
-            : isAccountDeletion
+            : isAccountDeletion || isPersonalDataDeletion
               ? "Submit deletion request"
               : "Send message"}
         </button>

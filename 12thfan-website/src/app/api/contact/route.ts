@@ -8,6 +8,7 @@ const ENQUIRY_LABELS: Record<string, string> = {
   feedback: "Feedback",
   partnership: "Partnership",
   account_deletion: "Account deletion request",
+  personal_data_deletion: "Personal data deletion request",
   other: "Other",
 };
 
@@ -28,10 +29,15 @@ async function notifySlackContact(
   const webhook = slackWebhookUrl();
   if (!webhook) return;
 
-  const isDeletion = enquiryType === "account_deletion";
   const enquiryLabel = ENQUIRY_LABELS[enquiryType] ?? enquiryType;
+  const title =
+    enquiryType === "account_deletion"
+      ? "🗑️ Account deletion request — 12th Fan"
+      : enquiryType === "personal_data_deletion"
+        ? "🗑️ Personal data deletion request — 12th Fan"
+        : "📩 New 12th Fan contact message";
   const text = [
-    isDeletion ? "🗑️ Account deletion request — 12th Fan" : "📩 New 12th Fan contact message",
+    title,
     `🏷️ Enquiry type: ${enquiryLabel}`,
     `👤 Name: ${name}`,
     `📧 Email: ${email}`,
