@@ -4,9 +4,28 @@ import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
+const ENQUIRY_TYPES = [
+  { value: "general", label: "General enquiry" },
+  { value: "feedback", label: "Feedback" },
+  { value: "partnership", label: "Partnership" },
+  { value: "account_deletion", label: "Delete my 12th Fan account" },
+  { value: "other", label: "Other" },
+] as const;
+
+type EnquiryType = (typeof ENQUIRY_TYPES)[number]["value"];
+
+const fieldLabelClass =
+  "block text-sm font-medium text-zinc-700 [[data-on-dark]_&]:text-white/90";
+const fieldInputClass =
+  "mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand-mid)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--brand-mid)_20%,transparent)] disabled:opacity-60";
+
 export function ContactForm({ className }: { className?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [enquiryType, setEnquiryType] = useState<EnquiryType>("general");
+  const [submittedDeletion, setSubmittedDeletion] = useState(false);
+
+  const isAccountDeletion = enquiryType === "account_deletion";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,6 +34,8 @@ export function ContactForm({ className }: { className?: string }) {
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
+    const reason = String(fd.get("enquiryType") ?? enquiryType).trim() as EnquiryType;
+    const deletionRequest = reason === "account_deletion";
 
     setStatus("loading");
     setErrorMessage(null);
@@ -23,7 +44,7 @@ export function ContactForm({ className }: { className?: string }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, enquiryType: reason }),
       });
       const data = (await res.json()) as { ok?: boolean; error?: string };
 
@@ -33,8 +54,14 @@ export function ContactForm({ className }: { className?: string }) {
         return;
       }
 
-      window.alert("Thanks — we've received your message and will get back to you soon.");
+      window.alert(
+        deletionRequest
+          ? "Thanks — we've received your account deletion request and will process it soon."
+          : "Thanks — we've received your message and will get back to you soon.",
+      );
+      setSubmittedDeletion(deletionRequest);
       setStatus("success");
+      setEnquiryType("general");
       form.reset();
     } catch {
       setStatus("error");
@@ -45,7 +72,9 @@ export function ContactForm({ className }: { className?: string }) {
   if (status === "success") {
     return (
       <p className="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/80 px-6 py-4 text-center text-base text-emerald-900">
-        Thanks — we&apos;ve received your message and will get back to you soon.
+        {submittedDeletion
+          ? "Thanks — we\u2019ve received your account deletion request and will process it soon."
+          : "Thanks — we\u2019ve received your message and will get back to you soon."}
       </p>
     );
   }
@@ -59,7 +88,49 @@ export function ContactForm({ className }: { className?: string }) {
       : null}
 
       <div>
-        <label htmlFor="contact-name" className="block text-sm font-medium text-zinc-700 [[data-on-dark]_&]:text-white/90">
+        <label htmlFor="contact-enquiry-type" className={fieldLabelClass}>
+          Enquiry type
+        </label>
+        <select
+          id="contact-enquiry-type"
+          name="enquiryType"
+          required
+          value={enquiryType}
+          disabled={status === "loading"}
+          onChange={(e) => setEnquiryType(e.target.value as EnquiryType)}
+          className={cn(fieldInputClass, "appearance-none bg-[length:1rem] bg-[right_0.85rem_center] bg-no-repeat pr-10")}
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2371717a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+          }}
+        >
+          {ENQUIRY_TYPES.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {isAccountDeletion ?
+        <div
+          className="space-y-3 rounded-xl border border-zinc-200 bg-zinc-50/90 px-4 py-4 text-sm leading-relaxed text-zinc-700"
+          role="note"
+        >
+          <p>
+            You can permanently delete your account from within the 12th Fan app via Profile → Settings → Delete
+            Account. If you&apos;re unable to access the app, submit this form using the email address associated with
+            your 12th Fan account and we&apos;ll process your deletion request.
+          </p>
+          <p>
+            Deleting your account will permanently remove your 12th Fan account and associated personal data. Certain
+            information may only be retained where required for legal, security, fraud-prevention or regulatory
+            purposes, and only for as long as necessary.
+          </p>
+        </div>
+      : null}
+
+      <div>
+        <label htmlFor="contact-name" className={fieldLabelClass}>
           Name
         </label>
         <input
@@ -71,13 +142,13 @@ export function ContactForm({ className }: { className?: string }) {
           maxLength={120}
           placeholder="Your name"
           disabled={status === "loading"}
-          className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand-mid)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--brand-mid)_20%,transparent)] disabled:opacity-60"
+          className={fieldInputClass}
         />
       </div>
 
       <div>
-        <label htmlFor="contact-email" className="block text-sm font-medium text-zinc-700 [[data-on-dark]_&]:text-white/90">
-          Email
+        <label htmlFor="contact-email" className={fieldLabelClass}>
+          {isAccountDeletion ? "Email linked to your 12th Fan account" : "Email"}
         </label>
         <input
           id="contact-email"
@@ -87,12 +158,12 @@ export function ContactForm({ className }: { className?: string }) {
           autoComplete="email"
           placeholder="you@example.com"
           disabled={status === "loading"}
-          className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand-mid)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--brand-mid)_20%,transparent)] disabled:opacity-60"
+          className={fieldInputClass}
         />
       </div>
 
       <div>
-        <label htmlFor="contact-message" className="block text-sm font-medium text-zinc-700 [[data-on-dark]_&]:text-white/90">
+        <label htmlFor="contact-message" className={fieldLabelClass}>
           Message
         </label>
         <textarea
@@ -101,9 +172,13 @@ export function ContactForm({ className }: { className?: string }) {
           required
           rows={6}
           maxLength={4000}
-          placeholder="How can we help?"
+          placeholder={
+            isAccountDeletion
+              ? "Please confirm you want your 12th Fan account deleted, and share any extra details we may need."
+              : "How can we help?"
+          }
           disabled={status === "loading"}
-          className="mt-2 w-full resize-y rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-[var(--brand-mid)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--brand-mid)_20%,transparent)] disabled:opacity-60"
+          className={cn(fieldInputClass, "resize-y")}
         />
       </div>
 
@@ -113,7 +188,11 @@ export function ContactForm({ className }: { className?: string }) {
           disabled={status === "loading"}
           className="inline-flex h-12 w-full max-w-sm items-center justify-center rounded-2xl bg-linear-to-br from-[var(--brand-light)] via-[var(--brand-mid)] to-[var(--brand-forest)] px-8 text-base font-semibold uppercase tracking-tight text-white shadow-[0_8px_24px_-10px_color-mix(in_srgb,var(--brand-forest)_55%,transparent)] transition-[filter,transform] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color-mix(in_srgb,var(--brand-forest)_65%,#171717)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto [font-family:var(--font-passion-one)]"
         >
-          {status === "loading" ? "Sending…" : "Send message"}
+          {status === "loading"
+            ? "Sending…"
+            : isAccountDeletion
+              ? "Submit deletion request"
+              : "Send message"}
         </button>
       </div>
     </form>

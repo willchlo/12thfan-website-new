@@ -5,7 +5,8 @@ import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact us",
-  description: "Get in touch with the 12th Fan team.",
+  description:
+    "Get in touch with the 12th Fan team, or request deletion of your 12th Fan account.",
 };
 
 export default function ContactPage() {

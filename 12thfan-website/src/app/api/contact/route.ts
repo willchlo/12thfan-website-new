@@ -3,6 +3,14 @@ import { NextResponse } from "next/server";
 const MAX_NAME = 120;
 const MAX_MESSAGE = 4000;
 
+const ENQUIRY_LABELS: Record<string, string> = {
+  general: "General enquiry",
+  feedback: "Feedback",
+  partnership: "Partnership",
+  account_deletion: "Account deletion request",
+  other: "Other",
+};
+
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -11,12 +19,20 @@ function slackWebhookUrl() {
   return process.env.SLACK_WEBHOOK_URL?.trim() || process.env.CONTACT_WEBHOOK_URL?.trim();
 }
 
-async function notifySlackContact(name: string, email: string, message: string) {
+async function notifySlackContact(
+  name: string,
+  email: string,
+  message: string,
+  enquiryType: string,
+) {
   const webhook = slackWebhookUrl();
   if (!webhook) return;
 
+  const isDeletion = enquiryType === "account_deletion";
+  const enquiryLabel = ENQUIRY_LABELS[enquiryType] ?? enquiryType;
   const text = [
-    "📩 New 12th Fan contact message",
+    isDeletion ? "🗑️ Account deletion request — 12th Fan" : "📩 New 12th Fan contact message",
+    `🏷️ Enquiry type: ${enquiryLabel}`,
     `👤 Name: ${name}`,
     `📧 Email: ${email}`,
     `💬 Message: ${message}`,
@@ -35,6 +51,10 @@ export async function POST(request: Request) {
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim() : "";
     const message = typeof body.message === "string" ? body.message.trim() : "";
+    const enquiryType =
+      typeof body.enquiryType === "string" && body.enquiryType.trim()
+        ? body.enquiryType.trim()
+        : "general";
 
     if (!name || name.length > MAX_NAME) {
       return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
@@ -45,11 +65,20 @@ export async function POST(request: Request) {
     if (!message || message.length > MAX_MESSAGE) {
       return NextResponse.json({ error: "Please enter a message (max 4000 characters)." }, { status: 400 });
     }
+    if (!(enquiryType in ENQUIRY_LABELS)) {
+      return NextResponse.json({ error: "Please select a valid enquiry type." }, { status: 400 });
+    }
 
-    await notifySlackContact(name, email, message);
+    await notifySlackContact(name, email, message, enquiryType);
 
     if (process.env.NODE_ENV === "development") {
-      console.info("[contact]", { name, email, messageLength: message.length });
+      console.info("[contact]", {
+        name,
+        email,
+        enquiryType,
+        enquiryLabel: ENQUIRY_LABELS[enquiryType],
+        messageLength: message.length,
+      });
     }
 
     return NextResponse.json({ ok: true });
